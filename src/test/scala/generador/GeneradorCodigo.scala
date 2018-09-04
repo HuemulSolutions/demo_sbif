@@ -22,7 +22,7 @@ class AppTest {
       var row_class = new raw_B1_mes(huemulBigDataGov,Control)
       row_class.GenerateInitialCode("com.yourcompany" //PackageBase
                                   , "sbif"//PackageProject
-                                  , "eerr_procesa"//NewObjectName
+                                  , "process_eerr_mes"//NewObjectName
                                   , "tbl_sbif_eerr_mes"//NewTableName
                                   
                                   , huemulType_Tables.Transaction //TableType

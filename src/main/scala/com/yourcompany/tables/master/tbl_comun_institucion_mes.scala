@@ -37,7 +37,7 @@ class tbl_comun_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Cont
     
   /**********   S E G U R I D A D   ****************************************/
   //Solo estos package y clases pueden ejecutar en modo full, si no se especifica todos pueden invocar
-  this.WhoCanRun_executeFull_addAccess("institucion_procesa_mes", "com.yourcompany.sbif")
+  this.WhoCanRun_executeFull_addAccess("process_institucion_mes", "com.yourcompany.sbif")
   //Solo estos package y clases pueden ejecutar en modo solo Insert, si no se especifica todos pueden invocar
   //this.WhoCanRun_executeOnlyInsert_addAccess("[[MyclassName]]", "[[my.package.path]]")
   //Solo estos package y clases pueden ejecutar en modo solo Update, si no se especifica todos pueden invocar
