@@ -5,6 +5,7 @@ import com.yourcompany.tables.master._
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import java.util.Calendar;
+import com.yourcompany.settings._
 
 object process_institucion extends Serializable {
     /**

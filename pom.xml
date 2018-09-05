@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yourcompany</groupId>
-  <artifactId>sbif</artifactId>
+  <artifactId>demo_1.0_sbif</artifactId>
   <version>1.0</version>
-  <name>EjemploSbif</name>
+  <name>demo_1.0_sbif - Ejemplo SBIF</name>
   <description>Aplicación Ejemplo de uso de librería Huemul BigDataGovernance</description>
   <inceptionYear>2018</inceptionYear>
   <licenses>
@@ -28,6 +28,12 @@
   	<dependency>
     	<groupId>com.huemulsolutions.bigdata</groupId>
     	<artifactId>huemul-bigdatagovernance</artifactId>
+    	<version>1.0</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>com.yourcompany</groupId>
+    	<artifactId>demo_1.0_settings</artifactId>
     	<version>1.0</version>
     </dependency>
     

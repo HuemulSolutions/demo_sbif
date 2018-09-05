@@ -9,6 +9,7 @@ import org.apache.spark.sql._
 import com.yourcompany.tables.master._
 import com.yourcompany.sbif.datalake._
 import org.apache.spark.sql.functions._
+import com.yourcompany.settings._
 
 
 //import com.huemulsolutions.bigdata.tables._

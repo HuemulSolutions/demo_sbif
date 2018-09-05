@@ -1,11 +1,12 @@
 package com.yourcompany.sbif.datalake
         
-import com.yourcompany.sbif.globalSettings._
+
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.datalake._
 import com.huemulsolutions.bigdata.tables._
 import org.apache.spark.sql.types._
+import com.yourcompany.settings.globalSettings._
 
 /**
  * Clase que permite abrir un archivo de texto, devuelve un objeto huemul_dataLake con un DataFrame de los datos

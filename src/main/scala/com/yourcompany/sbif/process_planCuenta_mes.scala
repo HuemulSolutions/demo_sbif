@@ -7,6 +7,7 @@ import java.util.Calendar;
 import org.apache.spark.sql.types._
 import com.yourcompany.tables.master._
 import com.yourcompany.sbif.datalake._
+import com.yourcompany.settings._
 
 //import com.huemulsolutions.bigdata.tables._
 //import com.huemulsolutions.bigdata.dataquality._
