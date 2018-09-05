@@ -36,7 +36,7 @@ object process_institucion_mes {
     while (i <= param_numMeses) {
       param_ano = huemulBigDataGov.getYear(Fecha)
       param_mes = huemulBigDataGov.getMonth(Fecha)
-      println(s"Procesando Año ${Symbol}param_ano, Mes ${Symbol}param_mes (${Symbol}i de ${Symbol}param_numMeses)")
+      println(s"Procesando Año $param_ano, Mes $param_mes ($i de $param_numMeses)")
       
       //Ejecuta codigo
       var FinOK = procesa_master(huemulBigDataGov, null, param_ano, param_mes)
@@ -44,7 +44,7 @@ object process_institucion_mes {
       if (FinOK)
         i+=1
       else {
-        println(s"ERROR Procesando Año ${Symbol}param_ano, Mes ${Symbol}param_mes (${Symbol}i de ${Symbol}param_numMeses)")
+        println(s"ERROR Procesando Año $param_ano, Mes $param_mes ($i de $param_numMeses)")
         i = param_numMeses + 1
       }
         
@@ -132,7 +132,7 @@ object process_institucion_mes_Migrar {
     
    val clase = new tbl_comun_institucion_mes(huemulBigDataGov, null)
    clase.CopyToDest(param, "[[environment]]")
-   
+   huemulBigDataGov.close
  }
  
 }

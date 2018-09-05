@@ -41,6 +41,8 @@ object process_institucion extends Serializable {
         
       Fecha.add(Calendar.MONTH, 1)      
     }
+    
+    huemulBigDataGov.close()
 
   }
   

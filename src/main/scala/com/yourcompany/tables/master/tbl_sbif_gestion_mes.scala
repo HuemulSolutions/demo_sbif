@@ -169,6 +169,15 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   fk_tbl_comun_institucion_mes.AddRelationship(itbl_comun_institucion_mes.ins_id, ins_id)
   fk_tbl_comun_institucion_mes.AddRelationship(itbl_comun_institucion_mes.periodo_mes, periodo_mes)
   
+  val itbl_comun_negocio = new tbl_comun_negocio(huemulBigDataGov,Control)
+  val fk_tbl_comun_negocio = new huemul_Table_Relationship(itbl_comun_negocio, false)
+  fk_tbl_comun_negocio.AddRelationship(itbl_comun_negocio.negocio_id, negocio_id)
+
+
+  val itbl_comun_producto = new tbl_comun_producto(huemulBigDataGov,Control)
+  val fk_tbl_comun_producto = new huemul_Table_Relationship(itbl_comun_producto, false)
+  fk_tbl_comun_producto.AddRelationship(itbl_comun_producto.producto_id, producto_id)
+
    
   //**********Ejemplo para agregar reglas de DataQuality Avanzadas  -->ColumnXX puede ser null si la validacion es a nivel de tabla
   //**************Parametros

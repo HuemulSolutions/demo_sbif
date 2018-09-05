@@ -260,7 +260,7 @@ object process_eerr_mes_Migrar {
     
    val clase = new tbl_sbif_eerr_mes(huemulBigDataGov, null)
    clase.CopyToDest(param, "[[environment]]")
-   
+   huemulBigDataGov.close
  }
  
 }
