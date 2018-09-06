@@ -1,7 +1,6 @@
 *.class
 *.log
 /target/
-/src/
 *.jar
 .cache-tests
 .cache-main
