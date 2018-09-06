@@ -100,7 +100,8 @@ object process_planCuenta {
       huemulTable.DataFramehuemul.DQ_StatsAllCols(Control, huemulTable)        
       
       Control.NewStep("Asocia columnas de la tabla con nombres de campos de SQL")
-      huemulTable.setMappingAuto()
+      huemulTable.planCuenta_id.SetMapping("planCuenta_id")
+      huemulTable.planCuenta_Nombre.SetMapping("planCuenta_Nombre")
       
       Control.NewStep("Ejecuta Proceso")    
       if (!huemulTable.executeFull("FinalSaved"))
