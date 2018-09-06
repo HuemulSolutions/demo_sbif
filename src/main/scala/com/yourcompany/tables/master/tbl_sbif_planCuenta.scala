@@ -27,7 +27,7 @@ class tbl_sbif_planCuenta(huemulBigDataGov: huemul_BigDataGovernance, Control: h
   //Ruta en HDFS donde se guardara el archivo PARQUET
   this.setGlobalPaths(huemulBigDataGov.GlobalSettings.MASTER_SmallFiles_Path)
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
-  this.setLocalPath("sbif//")
+  this.setLocalPath("sbif/")
   
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI

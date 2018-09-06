@@ -19,7 +19,7 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
   //Ruta en HDFS donde se guardara el archivo PARQUET
   this.setGlobalPaths(huemulBigDataGov.GlobalSettings.MASTER_SmallFiles_Path)
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
-  this.setLocalPath("sbif//")
+  this.setLocalPath("sbif/")
     //columna de particion
   this.setPartitionField("periodo_mes")
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
