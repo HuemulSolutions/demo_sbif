@@ -59,7 +59,6 @@ class tbl_sbif_planCuenta(huemulBigDataGov: huemul_BigDataGovernance, Control: h
   planCuenta_id.setIsPK(true) 
   planCuenta_id.setARCO_Data(false)  
   planCuenta_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
- 
   planCuenta_id.setDQ_MinLen(7) 
   planCuenta_id.setDQ_MaxLen(7)  
 
@@ -71,6 +70,33 @@ class tbl_sbif_planCuenta(huemulBigDataGov: huemul_BigDataGovernance, Control: h
   planCuenta_Nombre.setMDM_EnableProcessLog(true)  
   planCuenta_Nombre.setDQ_MinLen(5) 
   planCuenta_Nombre.setDQ_MaxLen(100)  
+  
+  val negocio_id = new huemul_Columns (StringType, false, "Asignación del negocio de la cuenta cuentable") 
+  negocio_id.setARCO_Data(false)  
+  negocio_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  negocio_id.setMDM_EnableOldValue(true)  
+  negocio_id.setMDM_EnableDTLog(true)  
+  negocio_id.setMDM_EnableProcessLog(true)  
+  negocio_id.setDefaultValue(null)
+  negocio_id.setNullable(true) 
+  
+  val producto_id = new huemul_Columns (StringType, false, "Asignación del Producdto de la cuenta cuentable") 
+  producto_id.setARCO_Data(false)  
+  producto_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  producto_id.setMDM_EnableOldValue(true)  
+  producto_id.setMDM_EnableDTLog(true)  
+  producto_id.setMDM_EnableProcessLog(true)  
+  producto_id.setDefaultValue(null)
+  producto_id.setNullable(true) 
+  
+  val planCuenta_Concepto = new huemul_Columns (StringType, false, "Indica el tipo de concepto que calcula (colocacion, provision, etc)") 
+  planCuenta_Concepto.setARCO_Data(false)  
+  planCuenta_Concepto.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  planCuenta_Concepto.setMDM_EnableOldValue(true)  
+  planCuenta_Concepto.setMDM_EnableDTLog(true)  
+  planCuenta_Concepto.setMDM_EnableProcessLog(true)  
+  planCuenta_Concepto.setDefaultValue(null)
+  planCuenta_Concepto.setNullable(true) 
 
 
 
@@ -90,9 +116,16 @@ class tbl_sbif_planCuenta(huemulBigDataGov: huemul_BigDataGovernance, Control: h
   //yourColumn.setEncryptedType("tipo")
     
   //**********Ejemplo para aplicar DataQuality de Integridad Referencial
-  //var tbl_[[PK]] = new tbl_[[PK]](huemulBigDataGov,Control)
-  //var fk_[[LocalField]] = new huemul_Table_Relationship(huemulBigDataGov,tbl_[[PK]], false)
-  //fk_[[LocalField]].AddRelationship(tbl_[[PK]].[[PK_Id]], [[LocalField]_Id)
+  
+  val itbl_comun_negocio = new tbl_comun_negocio(huemulBigDataGov,Control)
+  val fktbl_comun_negocio = new huemul_Table_Relationship(itbl_comun_negocio, true)
+  fktbl_comun_negocio.AddRelationship(itbl_comun_negocio.negocio_id, negocio_id)
+  
+  val itbl_comun_producto = new tbl_comun_producto(huemulBigDataGov,Control)
+  val fktbl_comun_producto = new huemul_Table_Relationship(itbl_comun_producto, true)
+  fktbl_comun_producto.AddRelationship(itbl_comun_producto.producto_id, producto_id)
+  
+  
     
   //**********Ejemplo para agregar reglas de DataQuality Avanzadas  -->ColumnXX puede ser null si la validacion es a nivel de tabla
   //**************Parametros
