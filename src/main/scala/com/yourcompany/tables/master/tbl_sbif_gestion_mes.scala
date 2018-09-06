@@ -60,15 +60,11 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   producto_id.setIsPK(true)
   producto_id.setARCO_Data(false)  
   producto_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  producto_id.setDQ_MinLen(4) 
-  producto_id.setDQ_MaxLen(10)
   
   val negocio_id = new huemul_Columns (StringType, true, "Código de negocio (consumo, hipotecario, comercial).") 
-  producto_id.setIsPK(true)
-  producto_id.setARCO_Data(false)  
-  producto_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  producto_id.setDQ_MinLen(4) 
-  producto_id.setDQ_MaxLen(10)
+  negocio_id.setIsPK(true)
+  negocio_id.setARCO_Data(false)  
+  negocio_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
   
   /**Deuda**/
   val gestion_colocacion_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de las colocaciones") 
@@ -193,5 +189,6 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   //************** porcentaje = 0.2 para permitir una tolerancia del 20% de errores
   //************** ambos parametros son independientes (condicion o), cualquiera de las dos tolerancias que no se cumpla se gatilla el error o warning
   //DQ_NombreRegla.setTolerance(numfilas, porcentaje)
-    
+ 
+  this.ApplyTableDefinition()
 }
