@@ -9,3 +9,4 @@ target/surefire-reports/TestSuiteReport.txt
 .cache-main
 .cache-tests
 .cache-tests
+.cache-tests
