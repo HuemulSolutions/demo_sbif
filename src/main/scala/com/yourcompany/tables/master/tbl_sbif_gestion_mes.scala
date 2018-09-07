@@ -160,10 +160,10 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   //yourColumn.setEncryptedType("tipo")
     
   //**********Ejemplo para aplicar DataQuality de Integridad Referencial
-  val itbl_comun_institucion_mes = new tbl_comun_institucion_mes(huemulBigDataGov,Control)
-  val fk_tbl_comun_institucion_mes = new huemul_Table_Relationship(itbl_comun_institucion_mes, false)
-  fk_tbl_comun_institucion_mes.AddRelationship(itbl_comun_institucion_mes.ins_id, ins_id)
-  fk_tbl_comun_institucion_mes.AddRelationship(itbl_comun_institucion_mes.periodo_mes, periodo_mes)
+  val itbl_comun_institucion = new tbl_comun_institucion(huemulBigDataGov,Control)
+  val fk_tbl_comun_institucion = new huemul_Table_Relationship(itbl_comun_institucion, false)
+  fk_tbl_comun_institucion.AddRelationship(itbl_comun_institucion.ins_id, ins_id)
+  
   
   val itbl_comun_negocio = new tbl_comun_negocio(huemulBigDataGov,Control)
   val fk_tbl_comun_negocio = new huemul_Table_Relationship(itbl_comun_negocio, false)
