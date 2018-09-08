@@ -15,13 +15,13 @@ object process_planCuenta_updateProducto {
     var param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parametro mes, ej: mes=12").toInt
     var param_numArchivo = huemulBigDataGov.arguments.GetValue("numArchivo", null, "Debe especificar el parametro numArchivo, ej: numArchivo=001")
     
-    val Control = new huemul_Control(huemulBigDataGov, null)    
+    val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.ANY_MOMENT)    
     
     try {             
       /*************** AGREGAR PARAMETROS A CONTROL **********************/
-      Control.AddParamInfo("param_ano", param_ano.toString())
-      Control.AddParamInfo("param_mes", param_mes.toString())
-      Control.AddParamInfo("param_numArchivo", param_numArchivo)
+      Control.AddParamYear("param_ano", param_ano)
+      Control.AddParamMonth("param_mes", param_mes)
+      Control.AddParamInformation("param_numArchivo", param_numArchivo)
       
       
       /*************** ABRE RAW DESDE DATALAKE **********************/

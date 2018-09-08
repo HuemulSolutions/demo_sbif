@@ -28,6 +28,8 @@ class tbl_sbif_planCuenta(huemulBigDataGov: huemul_BigDataGovernance, Control: h
   this.setGlobalPaths(huemulBigDataGov.GlobalSettings.MASTER_SmallFiles_Path)
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
   this.setLocalPath("sbif/")
+  //Frecuencia de actualización
+  this.setFrequency(huemulType_Frequency.ANY_MOMENT)
   
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI

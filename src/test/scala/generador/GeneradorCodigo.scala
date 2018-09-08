@@ -13,7 +13,7 @@ class AppTest {
     args(0) = "Environment=production,RegisterInControl=false,TestPlanMode=true"
       
     val huemulBigDataGov = new huemul_BigDataGovernance("Generador de Codigo",args,globalSettings.Global)
-    val Control = new huemul_Control(huemulBigDataGov,null)
+    val Control = new huemul_Control(huemulBigDataGov,null, huemulType_Frequency.ANY_MOMENT)
 
     @Test
     def testOK() = assertTrue(GeneraCod)

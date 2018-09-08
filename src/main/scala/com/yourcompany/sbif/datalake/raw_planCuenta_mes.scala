@@ -15,6 +15,7 @@ class raw_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hu
    this.LogicalName = "SBIF_planCuenta_Mes"
    this.Description = "Plan de cuentas entregado por la SBIF"
    this.GroupName = "SBIF"
+   this.setFrequency(huemulType_Frequency.MONTHLY)
    
    //Crea variable para configuración de lectura del archivo
    val CurrentSetting = new huemul_DataLakeSetting(huemulBigDataGov)
@@ -60,10 +61,10 @@ class raw_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hu
   */
   def open(Alias: String, ControlParent: huemul_Control, ano: Integer, mes: Integer, dia: Integer, hora: Integer, min: Integer, seg: Integer): Boolean = {
     //Crea registro de control de procesos
-     val control = new huemul_Control(huemulBigDataGov, ControlParent)
+     val control = new huemul_Control(huemulBigDataGov, ControlParent, huemulType_Frequency.MONTHLY)
     //Guarda los parámetros importantes en el control de procesos
-    control.AddParamInfo("Ano", ano.toString())
-    control.AddParamInfo("Mes", mes.toString())
+    control.AddParamYear("Ano", ano)
+    control.AddParamMonth("Mes", mes)
        
     try { 
       //NewStep va registrando los pasos de este proceso, también sirve como documentación del mismo.
@@ -129,7 +130,7 @@ object raw_planCuenta_mes_test {
     //Creación API
     val huemulBigDataGov  = new huemul_BigDataGovernance(s"Testing DataLake - ${this.getClass.getSimpleName}", args, Global)
     //Creación del objeto control, por default no permite ejecuciones en paralelo del mismo objeto (corre en modo SINGLETON)
-    val Control = new huemul_Control(huemulBigDataGov, null)
+    val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.ANY_MOMENT)
     
     /*************** PARAMETROS **********************/
     var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parámetro año, ej: ano=2017").toInt

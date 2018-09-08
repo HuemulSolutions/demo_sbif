@@ -13,7 +13,7 @@ class AppTest {
     args(0) = "Environment=production,RegisterInControl=false,TestPlanMode=true"
       
     val huemulBigDataGov = new huemul_BigDataGovernance("Pruebas Inicialización de Clases",args,generador.globalSettings.Global)
-    val Control = new huemul_Control(huemulBigDataGov,null)
+    val Control = new huemul_Control(huemulBigDataGov,null, huemulType_Frequency.ANY_MOMENT)
 
     /****************************************************************************************/
     /**************   tbl_comun_institucion_mes  *********************/

@@ -52,12 +52,12 @@ object process_institucion extends Serializable {
     param_mes: mes de los datos  <br>
    */
   def procesa_master(huemulBigDataGov: huemul_BigDataGovernance, ControlParent: huemul_Control, param_ano: Integer, param_mes: Integer): Boolean = {
-    val Control = new huemul_Control(huemulBigDataGov, ControlParent)    
+    val Control = new huemul_Control(huemulBigDataGov, ControlParent, huemulType_Frequency.MONTHLY)    
     
     try {             
       /*************** AGREGAR PARAMETROS A CONTROL **********************/
-      Control.AddParamInfo("param_ano", param_ano.toString())
-      Control.AddParamInfo("param_mes", param_mes.toString())
+      Control.AddParamYear("param_ano", param_ano)
+      Control.AddParamMonth("param_mes", param_mes)
       
       Control.NewStep("Abre DataLake")  
       var DF_RAW =  new raw_institucion_mes(huemulBigDataGov, Control)

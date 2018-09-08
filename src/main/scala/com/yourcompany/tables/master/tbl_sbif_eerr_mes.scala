@@ -22,6 +22,9 @@ class tbl_sbif_eerr_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hue
   this.setLocalPath("sbif/")
     //columna de particion
   this.setPartitionField("periodo_mes")
+  //Frecuencia de actualización
+  this.setFrequency(huemulType_Frequency.MONTHLY)
+  
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI
   this.setDescription("un estado de resultados consolidado + estado de situación financiera consolidado + información complementaria consolidada + información complementaria individual")

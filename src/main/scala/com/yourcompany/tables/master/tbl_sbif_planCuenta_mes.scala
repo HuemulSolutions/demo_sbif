@@ -22,6 +22,9 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
   this.setLocalPath("sbif/")
     //columna de particion
   this.setPartitionField("periodo_mes")
+  //Frecuencia de actualización
+  this.setFrequency(huemulType_Frequency.MONTHLY)
+  
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI
   this.setDescription("[[LLENAR ESTE CAMPO]]")

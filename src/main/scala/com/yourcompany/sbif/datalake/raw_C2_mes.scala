@@ -62,10 +62,11 @@ class raw_C2_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Con
   */
   def open(Alias: String, ControlParent: huemul_Control, ano: Integer, mes: Integer, dia: Integer, hora: Integer, min: Integer, seg: Integer, Cod_Banco: String): Boolean = {
     //Crea registro de control de procesos
-     val control = new huemul_Control(huemulBigDataGov, ControlParent)
+     val control = new huemul_Control(huemulBigDataGov, ControlParent, huemulType_Frequency.MONTHLY)
     //Guarda los parámetros importantes en el control de procesos
-    control.AddParamInfo("Ano", ano.toString())
-    control.AddParamInfo("Mes", mes.toString())
+    control.AddParamYear("Ano", ano)
+    control.AddParamMonth("Mes", mes)
+    control.AddParamInformation("Cod_Banco", Cod_Banco)
        
     try { 
       //NewStep va registrando los pasos de este proceso, también sirve como documentación del mismo.
@@ -126,7 +127,7 @@ object raw_C2_mes_test {
     //Creación API
     val huemulBigDataGov  = new huemul_BigDataGovernance(s"Testing DataLake - ${this.getClass.getSimpleName}", args, Global)
     //Creación del objeto control, por default no permite ejecuciones en paralelo del mismo objeto (corre en modo SINGLETON)
-    val Control = new huemul_Control(huemulBigDataGov, null)
+    val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.ANY_MOMENT)
     
     /*************** PARAMETROS **********************/
     var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parámetro año, ej: ano=2017").toInt

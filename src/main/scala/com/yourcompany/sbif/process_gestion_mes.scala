@@ -16,12 +16,12 @@ object process_gestion_mes {
     var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parametro año, ej: ano=2017").toInt
     var param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parametro mes, ej: mes=12").toInt
     
-    val Control = new huemul_Control(huemulBigDataGov, null)    
+    val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.MONTHLY)    
     
     try {             
       /*************** AGREGAR PARAMETROS A CONTROL **********************/
-      Control.AddParamInfo("param_ano", param_ano.toString())
-      Control.AddParamInfo("param_mes", param_mes.toString())
+      Control.AddParamYear("param_ano", param_ano)
+      Control.AddParamMonth("param_mes", param_mes)
      
       
       /*********************************************************/
@@ -37,7 +37,7 @@ object process_gestion_mes {
       periodo_mesAntFecha.add(Calendar.MONTH, -1)
       val periodo_mesAnt = huemulBigDataGov.dateFormat.format(periodo_mesAntFecha.getTime())
       
-      //Tablas a ser utilizadas en el proceso
+      //Obtiene datos de EERR consolidado del mes
       Control.NewStep("Obtiene datos de EERR consolidado del mes")
       val eerr_DF = new huemul_DataFrame(huemulBigDataGov, Control)
       eerr_DF.DF_from_SQL("eerr", s"""select ins_id

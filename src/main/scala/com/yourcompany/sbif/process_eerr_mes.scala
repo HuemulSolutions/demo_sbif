@@ -65,12 +65,12 @@ object process_eerr_mes {
     param_mes: mes de los datos  <br>
    */
   def procesa_master(huemulBigDataGov: huemul_BigDataGovernance, ControlParent: huemul_Control, param_ano: Integer, param_mes: Integer): Boolean = {
-    val Control = new huemul_Control(huemulBigDataGov, ControlParent)    
+    val Control = new huemul_Control(huemulBigDataGov, ControlParent, huemulType_Frequency.MONTHLY)    
     
     try {             
       /*************** AGREGAR PARAMETROS A CONTROL **********************/
-      Control.AddParamInfo("param_ano", param_ano.toString())
-      Control.AddParamInfo("param_mes", param_mes.toString())
+      Control.AddParamYear("param_ano", param_ano)
+      Control.AddParamMonth("param_mes", param_mes)
       
       //Obtiene listado de instituciones del mes
       val periodo_mes = huemulBigDataGov.ReplaceWithParams("{{YYYY}}-{{MM}}-{{DD}}", param_ano, param_mes, 1, 0, 0, 0, null)
