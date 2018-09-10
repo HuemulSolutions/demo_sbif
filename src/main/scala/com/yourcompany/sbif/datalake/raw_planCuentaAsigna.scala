@@ -12,7 +12,6 @@ import com.yourcompany.settings.globalSettings._
  * Clase que permite abrir un archivo de texto, devuelve un objeto huemul_dataLake con un DataFrame de los datos
  */
 class raw_planCuentaAsigna(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Control) extends huemul_DataLake(huemulBigDataGov, Control) with Serializable  {
-   this.LogicalName = "raw_planCuentaAsigna"
    this.Description = "Asignación de Negocio y Producto al plan de cuentas entregado por la SBIF"
    this.GroupName = "SBIF"
    this.setFrequency(huemulType_Frequency.MONTHLY)

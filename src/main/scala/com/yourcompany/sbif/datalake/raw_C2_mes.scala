@@ -14,7 +14,6 @@ import com.yourcompany.settings.globalSettings._
  * Clase que permite abrir un archivo de texto, devuelve un objeto huemul_dataLake con un DataFrame de los datos
  */
 class raw_C2_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Control) extends huemul_DataLake(huemulBigDataGov, Control) with Serializable  {
-   this.LogicalName = "sbif_C2_mes"
    this.Description = "Decripción de la interfaz"
    this.GroupName = "sbif"
    

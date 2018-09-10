@@ -26,7 +26,7 @@ class AppTest {
                                   , "tbl_sbif_eerr_mes"//NewTableName
                                   
                                   , huemulType_Tables.Transaction //TableType
-                                  , true //EsMes
+                                  , huemulType_Frequency.MONTHLY //EsMes
                                   , false //AutoMapping)
                                   )                    
        return true

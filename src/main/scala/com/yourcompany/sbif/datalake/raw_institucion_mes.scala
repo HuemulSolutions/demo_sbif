@@ -10,7 +10,6 @@ import com.yourcompany.settings.globalSettings._
  * Clase que permite abrir un archivo de texto, devuelve un objeto huemul_dataLake con un DataFrame de los datos
  */
 class raw_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Control) extends huemul_DataLake(huemulBigDataGov, Control) with Serializable  {
-   this.LogicalName = "SBIF_institucion_Mes"
    this.Description = "Instituciones vigentes entregado por la SBIF"
    this.GroupName = "SBIF"
    this.setFrequency(huemulType_Frequency.MONTHLY)
@@ -128,6 +127,6 @@ object raw_institucion_mes_test {
       DF_RAW.DataFramehuemul.DataFrame.show()
       
     Control.FinishProcessOK
-    DF_RAW.GenerateInitialCode("com.yourcompany.sbif","institucion_procesa","tbl_comun_institucion", "sbif/", huemulType_Tables.Reference,true,false)        
+            
   }  
 }

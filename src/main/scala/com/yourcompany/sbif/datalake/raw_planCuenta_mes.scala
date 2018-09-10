@@ -12,7 +12,6 @@ import com.yourcompany.settings.globalSettings._
  * Clase que permite abrir un archivo de texto, devuelve un objeto huemul_dataLake con un DataFrame de los datos
  */
 class raw_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Control) extends huemul_DataLake(huemulBigDataGov, Control) with Serializable  {
-   this.LogicalName = "SBIF_planCuenta_Mes"
    this.Description = "Plan de cuentas entregado por la SBIF"
    this.GroupName = "SBIF"
    this.setFrequency(huemulType_Frequency.MONTHLY)
@@ -146,6 +145,6 @@ object raw_planCuenta_mes_test {
       DF_RAW.DataFramehuemul.DataFrame.show()
       
     Control.FinishProcessOK
-    DF_RAW.GenerateInitialCode("com.yourcompany.sbif","planCuenta_procesa","tbl_comun_planCuenta", "sbif/", huemulType_Tables.Reference,true,false)
+    
   }  
 }
