@@ -67,26 +67,24 @@ object process_gestion_mes {
       
       
       Control.NewStep("Generar Logica de Negocio: Obtiene cruce de plan de cuentas con eerr mensual")
-      itbl_sbif_gestion_mes.DF_from_SQL("TablaFinal", s""" SELECT '${periodo_mes}' as periodo_mes
+      itbl_sbif_gestion_mes.DF_from_SQL("tabla_Calculo1", s""" SELECT '${periodo_mes}' as periodo_mes
                                                                   ,ins_id
                                                                   ,planCuenta.producto_id
                                                                   ,planCuenta.Negocio_Id
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'COLOCACION'          then eerr_Monto_Act                   else 0 end) as gestion_colocacion_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'COLOCACION_M90'      then eerr_Monto_Act                   else 0 end) as gestion_colocacionMora90_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'PROVISION'           then eerr_Monto_Act - eerr_Monto_Ant  else 0 end) as gestion_provision_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'PROVISION'           then eerr_Monto_Act                   else 0 end) as gestion_provision_Ano
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'PROVISION_STOCK'     then eerr_Monto_Act                   else 0 end) as gestion_provisionStock
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'CASTIGO'             then eerr_Monto_Act - eerr_Monto_Ant  else 0 end) as gestion_castigo_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'CASTIGO'             then eerr_Monto_Act - eerr_Monto_Ant  else 0 end) as gestion_castigo_Ano
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'RECUPERO'            then eerr_Monto_Act - eerr_Monto_Ant  else 0 end) as gestion_recupero_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'RECUPERO'            then eerr_Monto_Act - eerr_Monto_Ant  else 0 end) as gestion_recupero_Ano
-                                                                  ,CAST(0 AS Decimal(20,2)) as gestion_gastoRiesgo_mes
-                                                                  ,CAST(0 AS Decimal(20,2)) as gestion_gastoRiesgo_Ano
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'INGRESO_INTERES'     then eerr_Monto_Act                   else 0 end) as gestion_ingresoInteres_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'GASTO_INTERES'       then eerr_Monto_Act                   else 0 end) as gestion_gastoInteres_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'INGRESO_COMISION'    then eerr_Monto_Act                   else 0 end) as gestion_ingresoComision_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'GASTO_INTERES'       then eerr_Monto_Act                   else 0 end) as gestion_gastoComision_mes
-                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'UTILIDAD_FINANCIERA' then eerr_Monto_Act                   else 0 end) as gestion_utilidadFinanciera_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'COLOCACION'          then eerr_Monto_Act                   else 0 end)       as gestion_colocacion_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'COLOCACION_MORA90'   then eerr_Monto_Act                   else 0 end)       as gestion_colocacionMora90_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'PROVISION_STOCK'     then eerr_Monto_Act - eerr_Monto_Ant  else 0 end)       as gestion_provision_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'PROVISION'           then eerr_Monto_Act                   else 0 end)       as gestion_provision_Ano
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'PROVISION_STOCK'     then eerr_Monto_Act                   else 0 end)       as gestion_provisionStock
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'CASTIGO'             then eerr_Monto_Act ${if (param_mes > 1) "- eerr_Monto_Ant" else ""}  else 0 end)       as gestion_castigo_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'CASTIGO'             then eerr_Monto_Act                   else 0 end)       as gestion_castigo_Ano
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'RECUPERO'            then eerr_Monto_Act ${if (param_mes > 1) "- eerr_Monto_Ant" else ""}   else 0 end)   as gestion_recupero_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'RECUPERO'            then eerr_Monto_Act                   else 0 end)       as gestion_recupero_Ano
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'INGRESO_INTERES'     then eerr_Monto_Act                   else 0 end)       as gestion_ingresoInteres_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'GASTO_INTERES'       then eerr_Monto_Act                   else 0 end)       as gestion_gastoInteres_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'INGRESO_COMISION'    then eerr_Monto_Act                   else 0 end)       as gestion_ingresoComision_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'GASTO_INTERES'       then eerr_Monto_Act                   else 0 end)       as gestion_gastoComision_mes
+                                                                  ,sum(case when planCuenta.planCuenta_Concepto = 'UTILIDAD_FINANCIERA' then eerr_Monto_Act                   else 0 end)       as gestion_utilidadFinanciera_mes
                                                          FROM eerr
                                                            INNER JOIN ${itbl_sbif_planCuenta.GetTable()} PlanCuenta
                                                               on eerr.planCuenta_id = planCuenta.planCuenta_id
@@ -95,6 +93,14 @@ object process_gestion_mes {
                                                                  ,planCuenta.producto_id
                                                                  ,planCuenta.Negocio_Id
                                              """)
+    
+      Control.NewStep("Generar Logica de Negocio: Calcula Gasto en Riesgo")
+      itbl_sbif_gestion_mes.DF_from_SQL("TablaFinal", s""" SELECT *
+                                                                ,CAST(gestion_provision_mes + gestion_castigo_mes - gestion_recupero_mes  AS Decimal(20,2)) as gestion_gastoRiesgo_mes
+                                                                ,CAST(gestion_provision_Ano + gestion_castigo_Ano - gestion_recupero_Ano  AS Decimal(20,2)) as gestion_gastoRiesgo_Ano
+                                                           FROM tabla_Calculo1
+                                                                        
+                                                      """)
       
       Control.NewStep("Asocia columnas de la tabla con nombres de campos de SQL")
       itbl_sbif_gestion_mes.setMappingAuto()
