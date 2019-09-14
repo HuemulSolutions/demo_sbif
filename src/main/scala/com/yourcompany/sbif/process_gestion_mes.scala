@@ -49,6 +49,10 @@ object process_gestion_mes {
                                       GROUP BY ins_id
                                               ,planCuenta_id
                                     """)
+                                    
+                                    max(len(
+                                        
+                                        
                                               
       //Valida N° de registros obtenidos
       Control.NewStep("Valida N° de registros obtenidos")
@@ -127,6 +131,10 @@ object process_gestion_mes {
       itbl_sbif_gestion_mes.gestion_gastoComision_mes.SetMapping("gestion_gastoComision_mes")
       itbl_sbif_gestion_mes.gestion_utilidadFinanciera_mes.SetMapping("gestion_utilidadFinanciera_mes")
       */
+      
+      val a = new tbl_comun_institucion(huemulBigDataGov, Control)
+      a.DF_from_SQL("a", "select * from tabla_Calculo1", false)
+      a.executeFull("a2")
       
       Control.NewStep("Ejecuta Proceso")    
       if (!itbl_sbif_gestion_mes.executeFull("FinalSaved"))

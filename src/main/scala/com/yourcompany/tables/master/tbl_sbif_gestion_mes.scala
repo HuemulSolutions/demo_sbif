@@ -186,7 +186,7 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   //********************  CodigoError: Puedes especificar un codigo para la captura posterior de errores, es un numero entre 1 y 999
   //********************  QueryLevel es opcional, por default es "row" y se aplica al ejemplo1 de la formula, para el ejmplo2 se debe indicar "Aggregate"
   //********************  Notification es opcional, por default es "error", y ante la aparicion del error el programa falla, si lo cambias a "warning" y la validacion falla, el programa sigue y solo sera notificado
-  //val DQ_NombreRegla: huemul_DataQuality = new huemul_DataQuality(ColumnXX,"Descripcion de la validacion", "Campo_1 > Campo_2",1)
+  val DQ_NombreRegla: huemul_DataQuality = new huemul_DataQuality(ColumnXX,"Descripcion de la validacion", "Campo_1 > Campo_2",1)
   //**************Adicionalmeente, puedes agregar "tolerancia" a la validacion, es decir, puedes especiicar 
   //************** numFilas = 10 para permitir 10 errores (al 11 se cae)
   //************** porcentaje = 0.2 para permitir una tolerancia del 20% de errores
