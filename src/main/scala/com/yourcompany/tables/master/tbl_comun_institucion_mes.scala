@@ -26,7 +26,7 @@ class tbl_comun_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Cont
   this.setFrequency(huemulType_Frequency.MONTHLY)
   //nuevo desde version 2.0
   //permite guardar versiones de los datos antes de que se vuelvan a ejecutar los procesos (solo para tablas de tipo master y reference)
-  this.setSaveBackup(true)
+  this.setSaveBackup(false)
   
   /**********   S E T E O   O P T I M I Z A C I O N   ****************************************/
   //nuevo desde version 2.0
