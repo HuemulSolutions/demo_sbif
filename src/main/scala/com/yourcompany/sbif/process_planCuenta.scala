@@ -96,8 +96,8 @@ object process_planCuenta {
       DF_RAW.DataFramehuemul.DataFrame.unpersist()
       
       //comentar este codigo cuando ya no sea necesario generar estadisticas de las columnas.
-      Control.NewStep("QUITAR!!! Generar Estadisticas de las columnas SOLO PARA PRIMERA EJECUCION")
-      huemulTable.DataFramehuemul.DQ_StatsAllCols(Control, huemulTable)        
+      //Control.NewStep("QUITAR!!! Generar Estadisticas de las columnas SOLO PARA PRIMERA EJECUCION")
+      //huemulTable.DataFramehuemul.DQ_StatsAllCols(Control, huemulTable)        
       
       Control.NewStep("Asocia columnas de la tabla con nombres de campos de SQL")
       huemulTable.planCuenta_id.SetMapping("planCuenta_id")
