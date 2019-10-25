@@ -38,7 +38,7 @@ object process_planCuenta_updateProducto {
       val huemulTable = new tbl_sbif_planCuenta(huemulBigDataGov, Control)
       
       Control.NewStep("Generar Logica de Negocio")
-      huemulTable.DF_from_DF("DF_DatosActualiza", DF_RAW.DataFramehuemul.DataFrame)
+      huemulTable.DF_from_RAW(DF_RAW, "DF_DatosActualiza")
       
       Control.NewStep("Asocia columnas de la tabla con nombres de campos de SQL")
       huemulTable.planCuenta_id.SetMapping("planCuenta_id")

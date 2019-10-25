@@ -12,7 +12,7 @@ class AppTest {
     val args: Array[String] = new Array[String](1)
     args(0) = "Environment=production,RegisterInControl=false,TestPlanMode=true"
       
-    val huemulBigDataGov = new huemul_BigDataGovernance("Generador de Codigo",args,globalSettings.Global)
+    val huemulBigDataGov = new huemul_BigDataGovernance("Generador de Codigo",args,com.yourcompany.settings.globalSettings.Global)
     val Control = new huemul_Control(huemulBigDataGov,null, huemulType_Frequency.ANY_MOMENT)
 
     @Test

@@ -75,7 +75,7 @@ object process_eerr_mes {
       //Obtiene listado de instituciones del mes
       val periodo_mes = huemulBigDataGov.ReplaceWithParams("{{YYYY}}-{{MM}}-{{DD}}", param_ano, param_mes, 1, 0, 0, 0, null)
       val itbl_institucion_mes = new tbl_comun_institucion_mes(huemulBigDataGov, Control)
-      val itbl_institucion_mes_data = huemulBigDataGov.DF_ExecuteQuery("df_ins", s"""select ins_id from ${itbl_institucion_mes.GetTable()} where periodo_mes = '${periodo_mes}'  """).collect()
+      val itbl_institucion_mes_data = huemulBigDataGov.DF_ExecuteQuery("df_ins", s"""select ins_id from ${itbl_institucion_mes.getTable()} where periodo_mes = '${periodo_mes}'  """).collect()
       
       if (itbl_institucion_mes_data.length == 0)
         Control.RaiseError(s"Error: No se encontraron instituciones cargadas para el periodo ${periodo_mes}")
@@ -259,7 +259,7 @@ object process_eerr_mes_Migrar {
     var param = huemulBigDataGov.ReplaceWithParams("{{YYYY}}-{{MM}}-{{DD}}", param_ano, param_mes, param_dia, 0, 0, 0)
     
    val clase = new tbl_sbif_eerr_mes(huemulBigDataGov, null)
-   clase.CopyToDest(param, "[[environment]]")
+   clase.copyToDest(param, "[[environment]]")
    huemulBigDataGov.close
  }
  

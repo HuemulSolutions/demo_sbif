@@ -96,8 +96,8 @@ object process_planCuenta {
       DF_RAW.DataFramehuemul.DataFrame.unpersist()
       
       //comentar este codigo cuando ya no sea necesario generar estadisticas de las columnas.
-      Control.NewStep("QUITAR!!! Generar Estadisticas de las columnas SOLO PARA PRIMERA EJECUCION")
-      huemulTable.DataFramehuemul.DQ_StatsAllCols(Control, huemulTable)        
+      //Control.NewStep("QUITAR!!! Generar Estadisticas de las columnas SOLO PARA PRIMERA EJECUCION")
+      //huemulTable.DataFramehuemul.DQ_StatsAllCols(Control, huemulTable)        
       
       Control.NewStep("Asocia columnas de la tabla con nombres de campos de SQL")
       huemulTable.planCuenta_id.SetMapping("planCuenta_id")
@@ -137,7 +137,7 @@ object process_planCuenta_Migrar {
     var param = huemulBigDataGov.ReplaceWithParams("{{YYYY}}-{{MM}}-{{DD}}", param_ano, param_mes, param_dia, 0, 0, 0)
     
    val clase = new tbl_sbif_planCuenta(huemulBigDataGov, null)
-   clase.CopyToDest(param, "[[environment]]")
+   clase.copyToDest(param, "[[environment]]")
    huemulBigDataGov.close
  }
  

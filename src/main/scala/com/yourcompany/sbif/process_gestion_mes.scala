@@ -44,14 +44,13 @@ object process_gestion_mes {
                                              ,planCuenta_id
                                              ,sum(case when periodo_mes = '${periodo_mes}' then eerr_Monto else 0 end) as eerr_Monto_Act
                                              ,sum(case when periodo_mes = '${periodo_mesAnt}' then eerr_Monto else 0 end) as eerr_Monto_Ant
-                                      FROM ${itbl_sbif_eerr_mes.GetTable()}
+                                      FROM ${itbl_sbif_eerr_mes.getTable()}
                                       WHERE periodo_mes in ('${periodo_mes}','${periodo_mesAnt}')
                                       GROUP BY ins_id
                                               ,planCuenta_id
                                     """)
                                     
-                                    max(len(
-                                        
+                                  
                                         
                                               
       //Valida N° de registros obtenidos
@@ -90,7 +89,7 @@ object process_gestion_mes {
                                                                   ,sum(case when planCuenta.planCuenta_Concepto = 'GASTO_INTERES'       then eerr_Monto_Act                   else 0 end)       as gestion_gastoComision_mes
                                                                   ,sum(case when planCuenta.planCuenta_Concepto = 'UTILIDAD_FINANCIERA' then eerr_Monto_Act                   else 0 end)       as gestion_utilidadFinanciera_mes
                                                          FROM eerr
-                                                           INNER JOIN ${itbl_sbif_planCuenta.GetTable()} PlanCuenta
+                                                           INNER JOIN ${itbl_sbif_planCuenta.getTable()} PlanCuenta
                                                               on eerr.planCuenta_id = planCuenta.planCuenta_id
                                                          WHERE planCuenta.planCuenta_Concepto is not null
                                                          GROUP BY ins_id

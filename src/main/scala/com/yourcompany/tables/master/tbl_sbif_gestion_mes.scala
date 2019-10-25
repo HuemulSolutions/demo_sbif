@@ -23,7 +23,15 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   this.setPartitionField("periodo_mes")
   //Frecuencia de actualización
   this.setFrequency(huemulType_Frequency.MONTHLY)
+  //nuevo desde version 2.0
+  //permite guardar versiones de los datos antes de que se vuelvan a ejecutar los procesos (solo para tablas de tipo master y reference)
+  this.setSaveBackup(false)
   
+  /**********   S E T E O   O P T I M I Z A C I O N   ****************************************/
+  //nuevo desde version 2.0
+  //indica la cantidad de archivos que generará al guardar el fichero (1 para archivos pequeños
+  //de esta forma se evita el problema de los archivos pequeños en HDFS
+  this.setNumPartitions(1)
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI
   this.setDescription("uCalcula indicadores a partir del plan de cuentas")
@@ -186,7 +194,7 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   //********************  CodigoError: Puedes especificar un codigo para la captura posterior de errores, es un numero entre 1 y 999
   //********************  QueryLevel es opcional, por default es "row" y se aplica al ejemplo1 de la formula, para el ejmplo2 se debe indicar "Aggregate"
   //********************  Notification es opcional, por default es "error", y ante la aparicion del error el programa falla, si lo cambias a "warning" y la validacion falla, el programa sigue y solo sera notificado
-  val DQ_NombreRegla: huemul_DataQuality = new huemul_DataQuality(ColumnXX,"Descripcion de la validacion", "Campo_1 > Campo_2",1)
+  //val DQ_NombreRegla: huemul_DataQuality = new huemul_DataQuality(ColumnXX,"Descripcion de la validacion", "Campo_1 > Campo_2",1)
   //**************Adicionalmeente, puedes agregar "tolerancia" a la validacion, es decir, puedes especiicar 
   //************** numFilas = 10 para permitir 10 errores (al 11 se cae)
   //************** porcentaje = 0.2 para permitir una tolerancia del 20% de errores

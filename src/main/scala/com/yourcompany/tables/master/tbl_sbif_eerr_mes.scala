@@ -24,7 +24,15 @@ class tbl_sbif_eerr_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hue
   this.setPartitionField("periodo_mes")
   //Frecuencia de actualización
   this.setFrequency(huemulType_Frequency.MONTHLY)
+  //nuevo desde version 2.0
+  //permite guardar versiones de los datos antes de que se vuelvan a ejecutar los procesos (solo para tablas de tipo master y reference)
+  this.setSaveBackup(false)
   
+  /**********   S E T E O   O P T I M I Z A C I O N   ****************************************/
+  //nuevo desde version 2.0
+  //indica la cantidad de archivos que generará al guardar el fichero (1 para archivos pequeños
+  //de esta forma se evita el problema de los archivos pequeños en HDFS
+  this.setNumPartitions(1)
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI
   this.setDescription("un estado de resultados consolidado + estado de situación financiera consolidado + información complementaria consolidada + información complementaria individual")

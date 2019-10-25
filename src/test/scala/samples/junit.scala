@@ -12,7 +12,7 @@ class AppTest {
     val args: Array[String] = new Array[String](1)
     args(0) = "Environment=production,RegisterInControl=false,TestPlanMode=true"
       
-    val huemulBigDataGov = new huemul_BigDataGovernance("Pruebas Inicialización de Clases",args,generador.globalSettings.Global)
+    val huemulBigDataGov = new huemul_BigDataGovernance("Pruebas Inicialización de Clases",args,com.yourcompany.settings.globalSettings.Global)
     val Control = new huemul_Control(huemulBigDataGov,null, huemulType_Frequency.ANY_MOMENT)
 
     /****************************************************************************************/
