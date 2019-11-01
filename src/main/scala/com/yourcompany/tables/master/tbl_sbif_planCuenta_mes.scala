@@ -27,6 +27,9 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
   //nuevo desde version 2.0
   //permite guardar versiones de los datos antes de que se vuelvan a ejecutar los procesos (solo para tablas de tipo master y reference)
   this.setSaveBackup(false)
+  //nuevo desde versión 2.1
+  //permite asignar un código de error personalizado al fallar la PK
+  this.setPK_externalCode("COD_ERROR")
   
   /**********   S E T E O   O P T I M I Z A C I O N   ****************************************/
   //nuevo desde version 2.0
@@ -76,20 +79,23 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
 
 
 
-  //**********Atributos adicionales de DataQuality
-  //yourColumn.setIsPK(true) //valor por default en cada campo es false
-  //yourColumn.setIsUnique(true) //valor por default en cada campo es false
-  //yourColumn.setNullable(true) //valor por default en cada campo es false
-  //yourColumn.setIsUnique(true) //valor por default en cada campo es false
-  //yourColumn.setDQ_MinDecimalValue(Decimal.apply(0))
-  //yourColumn.setDQ_MaxDecimalValue(Decimal.apply(200.0))
-  //yourColumn.setDQ_MinDateTimeValue("2018-01-01")
-  //yourColumn.setDQ_MaxDateTimeValue("2018-12-31")
-  //yourColumn.setDQ_MinLen(5)
-  //yourColumn.setDQ_MaxLen(100)
+  //**********Atributos adicionales de DataQuality 
+  /*
+            .setIsPK()         //por default los campos no son PK
+            .setIsUnique("COD_ERROR") //por default los campos pueden repetir sus valores
+            .setNullable() //por default los campos no permiten nulos
+            .setDQ_MinDecimalValue(Decimal.apply(0),"COD_ERROR")
+            .setDQ_MaxDecimalValue(Decimal.apply(200.0),"COD_ERROR")
+            .setDQ_MinDateTimeValue("2018-01-01","COD_ERROR")
+            .setDQ_MaxDateTimeValue("2018-12-31","COD_ERROR")
+            .setDQ_MinLen(5,"COD_ERROR")
+            .setDQ_MaxLen(100,"COD_ERROR")
+  */
   //**********Otros atributos
-  //yourColumn.setDefaultValue("'string'") // "10" // "'2018-01-01'"
-  //yourColumn.setEncryptedType("tipo")
+  /*
+            .setDefaultValues("'string'") // "10" // "'2018-01-01'"
+  				  .encryptedType("tipo")
+  */
     
   //**********Ejemplo para aplicar DataQuality de Integridad Referencial
   var tbl_comun_planCuenta = new tbl_sbif_planCuenta(huemulBigDataGov,Control)
@@ -104,12 +110,18 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
   //********************  CodigoError: Puedes especificar un codigo para la captura posterior de errores, es un numero entre 1 y 999
   //********************  QueryLevel es opcional, por default es "row" y se aplica al ejemplo1 de la formula, para el ejmplo2 se debe indicar "Aggregate"
   //********************  Notification es opcional, por default es "error", y ante la aparicion del error el programa falla, si lo cambias a "warning" y la validacion falla, el programa sigue y solo sera notificado
-  //val DQ_NombreRegla: huemul_DataQuality = new huemul_DataQuality(ColumnXX,"Descripcion de la validacion", "Campo_1 > Campo_2",1)
-  //**************Adicionalmeente, puedes agregar "tolerancia" a la validacion, es decir, puedes especiicar 
+  //********************  SaveErrorDetails: es opcional, true para guardar el detalle de filas que no cumplen con DQ. valor por default es true
+  //********************  DQ_ExternalCode: es opcional, indica el código de DataQuality externo para enlazar con herramientas de gobierno
+  //val DQ_NombreRegla: huemul_DataQuality = new huemul_DataQuality(columnaXX,"Descripcion de la validacion", "Campo_1 > Campo_2",1)
+  //          .setQueryLevel(huemulType_DQQueryLevel.Row)
+  //          .setNotification(huemulType_DQNotification.WARNING_EXCLUDE)
+  //          .setSaveErrorDetails(true)
+  //**************Adicionalmente, puedes agregar "tolerancia" a la validacion, es decir, puedes especiicar 
   //************** numFilas = 10 para permitir 10 errores (al 11 se cae)
   //************** porcentaje = 0.2 para permitir una tolerancia del 20% de errores
   //************** ambos parametros son independientes (condicion o), cualquiera de las dos tolerancias que no se cumpla se gatilla el error o warning
   //DQ_NombreRegla.setTolerance(numfilas, porcentaje)
+  //DQ_NombreRegla.setDQ_ExternalCode("COD_ERROR")
     
   this.ApplyTableDefinition()
 }
