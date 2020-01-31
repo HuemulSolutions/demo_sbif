@@ -36,6 +36,13 @@ class tbl_comun_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Cont
   //indica la cantidad de archivos que generará al guardar el fichero (1 para archivos pequeños
   //de esta forma se evita el problema de los archivos pequeños en HDFS
   this.setNumPartitions(1)
+  
+  /**********   C O N T R O L   D E   C A M B I O S   Y   B A C K U P   ****************************************/
+  //Permite guardar los errores y warnings en la aplicación de reglas de DQ, valor por default es true
+  //this.setSaveDQResult(true)
+  //Permite guardar backup de tablas maestras
+  //this.setSaveBackup(true)  //default value = false
+  
   /**********   S E T E O   I N F O R M A T I V O   ****************************************/
   //Nombre del contacto de TI
   this.setDescription("[[LLENAR ESTE CAMPO]]")
@@ -81,6 +88,21 @@ class tbl_comun_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Cont
             .setDQ_MaxDateTimeValue("2018-12-31","COD_ERROR")
             .setDQ_MinLen(5,"COD_ERROR")
             .setDQ_MaxLen(100,"COD_ERROR")
+            .setDQ_RegExpresion("","COD_ERROR")                          //desde versión 2.0
+  */
+  //**********Atributos adicionales para control de cambios en los datos maestros
+  /*
+   					.setMDM_EnableDTLog()
+  					.setMDM_EnableOldValue()
+  					.setMDM_EnableProcessLog()
+  					.setMDM_EnableOldValue_FullTrace()     //desde 2.0: guarda cada cambio de la tabla maestra en tabla de trace
+  */
+  //**********Otros atributos de clasificación
+  /*
+  					.encryptedType("tipo")
+  					.setARCO_Data()
+  					.securityLevel(huemulType_SecurityLevel.Public)
+  					.setBusinessGlossary("CODIGO")           //desde 2.0: enlaza id de glosario de términos con campos de la tabla
   */
   //**********Otros atributos
   /*
