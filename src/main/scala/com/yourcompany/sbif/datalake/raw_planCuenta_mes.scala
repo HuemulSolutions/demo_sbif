@@ -4,7 +4,6 @@ package com.yourcompany.sbif.datalake
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.datalake._
-import com.huemulsolutions.bigdata.tables._
 import org.apache.spark.sql.types._
 import com.yourcompany.settings.globalSettings._
 
@@ -94,22 +93,22 @@ class raw_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hu
       //Valida año
       val InfoAno = this.DataFramehuemul.DQ_StatsByCol(this, "ano")
       if (InfoAno.profilingResult.max_Col.toInt != ano || InfoAno.profilingResult.min_Col.toInt != ano)
-        control.RaiseError(s"user: Año de parámetro ${ano} distinto a valores del archivo (Min:${InfoAno.profilingResult.min_Col.toInt}, Max:${InfoAno.profilingResult.max_Col.toInt})")
+        control.RaiseError(s"user: Año de parámetro $ano distinto a valores del archivo (Min:${InfoAno.profilingResult.min_Col.toInt}, Max:${InfoAno.profilingResult.max_Col.toInt})")
       
       //Valida mes
       val InfoMes = this.DataFramehuemul.DQ_StatsByCol(this, "mes")  
       if (InfoMes.profilingResult.max_Col.toInt != mes || InfoMes.profilingResult.min_Col.toInt != mes)
-        control.RaiseError(s"user: Mes de parámetro ${ano} distinto a valores del archivo (Min:${InfoMes.profilingResult.min_Col.toInt}, Max:${InfoMes.profilingResult.max_Col.toInt})")
+        control.RaiseError(s"user: Mes de parámetro $ano distinto a valores del archivo (Min:${InfoMes.profilingResult.min_Col.toInt}, Max:${InfoMes.profilingResult.max_Col.toInt})")
         
       
       control.FinishProcessOK                      
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         control.Control_Error.GetError(e, this.getClass.getName, null)
         control.FinishProcessError()   
-      }
+
     }         
-    return control.Control_Error.IsOK()
+    control.Control_Error.IsOK()
   }
 }
 
@@ -130,10 +129,10 @@ object raw_planCuenta_mes_test {
     val huemulBigDataGov  = new huemul_BigDataGovernance(s"Testing DataLake - ${this.getClass.getSimpleName}", args, Global)
     //Creación del objeto control, por default no permite ejecuciones en paralelo del mismo objeto (corre en modo SINGLETON)
     val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.ANY_MOMENT)
-    
-    /*************** PARAMETROS **********************/
-    var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parámetro año, ej: ano=2017").toInt
-    var param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parámetro mes, ej: mes=12").toInt
+
+    /** ************* PARAMETROS **********************/
+    val param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parámetro año, ej: ano=2017").toInt
+    val param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parámetro mes, ej: mes=12").toInt
     
     //Inicializa clase RAW  
     val DF_RAW =  new raw_planCuenta_mes(huemulBigDataGov, Control)

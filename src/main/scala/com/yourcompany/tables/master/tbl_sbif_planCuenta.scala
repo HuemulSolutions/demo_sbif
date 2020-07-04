@@ -14,37 +14,36 @@ import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.tables._
 import com.huemulsolutions.bigdata.dataquality._
 import org.apache.spark.sql.types._
-import com.huemulsolutions.bigdata.dataquality.huemulType_DQNotification.huemulType_DQNotification
 
 
 class tbl_sbif_planCuenta(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Control) 
                   extends huemul_Table(huemulBigDataGov, Control) with Serializable {
   /**********   C O L U M N A S   ****************************************/
-  val planCuenta_id = new huemul_Columns (StringType, true, "código del plan de cuentas") 
+  val planCuenta_id: huemul_Columns = new huemul_Columns (StringType, true, "código del plan de cuentas")
             .setIsPK().setDQ_MinLen(7,"ERROR_01").setDQ_MaxLen(7,"ERROR_01")  
   
-  val planCuenta_Nombre = new huemul_Columns (StringType, true, "Nombre de la cuenta") 
+  val planCuenta_Nombre: huemul_Columns = new huemul_Columns (StringType, true, "Nombre de la cuenta")
             .setMDM_EnableOldValue().setMDM_EnableDTLog().setMDM_EnableProcessLog()  
             .setDQ_MinLen(5,"ERROR_02").setDQ_MaxLen(100,"ERROR_02")  
   
-  val negocio_id = new huemul_Columns (StringType, false, "Asignación del negocio de la cuenta cuentable") 
+  val negocio_id: huemul_Columns = new huemul_Columns (StringType, false, "Asignación del negocio de la cuenta cuentable")
             .setMDM_EnableOldValue().setMDM_EnableDTLog().setMDM_EnableProcessLog().setNullable() 
   
-  val producto_id = new huemul_Columns (StringType, false, "Asignación del Producdto de la cuenta cuentable") 
+  val producto_id: huemul_Columns = new huemul_Columns (StringType, false, "Asignación del Producdto de la cuenta cuentable")
             .setMDM_EnableOldValue().setMDM_EnableDTLog().setMDM_EnableProcessLog().setNullable() 
   
-  val planCuenta_Concepto = new huemul_Columns (StringType, false, "Indica el tipo de concepto que calcula (colocacion, provision, etc)") 
+  val planCuenta_Concepto: huemul_Columns = new huemul_Columns (StringType, false, "Indica el tipo de concepto que calcula (colocacion, provision, etc)")
             .setMDM_EnableOldValue().setMDM_EnableDTLog().setMDM_EnableProcessLog().setNullable() 
 
 
   /**********   I N T E G R I D A D   R E F E R E N C I A L   ****************************************/
   val itbl_comun_negocio = new tbl_comun_negocio(huemulBigDataGov,Control)
-  val fktbl_comun_negocio = new huemul_Table_Relationship(itbl_comun_negocio, true)
+  val fktbl_comun_negocio: huemul_Table_Relationship = new huemul_Table_Relationship(itbl_comun_negocio, true)
             .setExternalCode("ERROR_FK_NEGOCIO").setNotification(huemulType_DQNotification.WARNING_EXCLUDE)
   fktbl_comun_negocio.AddRelationship(itbl_comun_negocio.negocio_id, negocio_id)
   
   val itbl_comun_producto = new tbl_comun_producto(huemulBigDataGov,Control)
-  val fktbl_comun_producto = new huemul_Table_Relationship(itbl_comun_producto, true)
+  val fktbl_comun_producto: huemul_Table_Relationship = new huemul_Table_Relationship(itbl_comun_producto, true)
             .setExternalCode("ERROR_FK_PRODUCTO").setNotification(huemulType_DQNotification.ERROR)
   fktbl_comun_producto.AddRelationship(itbl_comun_producto.producto_id, producto_id)
   

@@ -4,7 +4,6 @@ package com.yourcompany.tables.master
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.tables._
-import com.huemulsolutions.bigdata.dataquality._
 import org.apache.spark.sql.types._
 
 
@@ -21,7 +20,7 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
   this.setLocalPath("sbif/")
     //columna de particion
-  this.setPartitionField("periodo_mes")
+  //this.setPartitionField("periodo_mes")
   //Frecuencia de actualización
   this.setFrequency(huemulType_Frequency.MONTHLY)
   //nuevo desde version 2.0
@@ -61,21 +60,18 @@ class tbl_sbif_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Contro
   /**********   C O L U M N A S   ****************************************/
 
     //Columna de periodo
-  val periodo_mes = new huemul_Columns (StringType, true,"periodo de los datos")
-  periodo_mes.setIsPK(true)
+  val periodo_mes: huemul_Columns = new huemul_Columns (StringType, true,"periodo de los datos")
+      .setIsPK()
+      .setPartitionColumn(1)
     
-  val planCuenta_id = new huemul_Columns (StringType, true, "código del plan de cuentas") 
-  planCuenta_id.setIsPK(true)
-  planCuenta_id.setARCO_Data(false)  
-  planCuenta_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  planCuenta_id.setDQ_MinLen(7) 
-  planCuenta_id.setDQ_MaxLen(7)  
+  val planCuenta_id: huemul_Columns = new huemul_Columns (StringType, true, "código del plan de cuentas")
+      .setIsPK()
+      .setDQ_MinLen(7,"ERROR_01")
+      .setDQ_MaxLen(7, "ERROR_01")
 
-  val planCuenta_Nombre = new huemul_Columns (StringType, true, "Nombre de la cuenta") 
-  planCuenta_Nombre.setARCO_Data(false)  
-  planCuenta_Nombre.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  planCuenta_Nombre.setDQ_MinLen(5) 
-  planCuenta_Nombre.setDQ_MaxLen(100)  
+  val planCuenta_Nombre: huemul_Columns = new huemul_Columns (StringType, true, "Nombre de la cuenta")
+      .setDQ_MinLen(5,"ERROR_02")
+      .setDQ_MaxLen(100, "ERROR_02")
 
 
 

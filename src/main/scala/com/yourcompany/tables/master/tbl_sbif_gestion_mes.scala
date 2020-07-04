@@ -3,7 +3,6 @@ package com.yourcompany.tables.master
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.tables._
-import com.huemulsolutions.bigdata.dataquality._
 import org.apache.spark.sql.types._
 
 
@@ -20,7 +19,7 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
   this.setLocalPath("sbif/")
     //columna de particion
-  this.setPartitionField("periodo_mes")
+  //this.setPartitionField("periodo_mes")
   //Frecuencia de actualización
   this.setFrequency(huemulType_Frequency.MONTHLY)
   //nuevo desde version 2.0
@@ -60,103 +59,65 @@ class tbl_sbif_gestion_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: 
   /**********   C O L U M N A S   ****************************************/
 
     //Columna de periodo
-  val periodo_mes = new huemul_Columns (StringType, true,"periodo de los datos")
-  periodo_mes.setIsPK(true)
+  val periodo_mes: huemul_Columns = new huemul_Columns (StringType, true,"periodo de los datos")
+      .setIsPK()
+      .setPartitionColumn(1)
     
-  val ins_id = new huemul_Columns (StringType, true, "Código institución.") 
-  ins_id.setIsPK(true)
-  ins_id.setARCO_Data(false)  
-  ins_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  ins_id.setDQ_MinLen(3) 
-  ins_id.setDQ_MaxLen(3)
+  val ins_id: huemul_Columns = new huemul_Columns (StringType, true, "Código institución.")
+      .setIsPK()
+      .setDQ_MinLen(3,"ERROR_01")
+      .setDQ_MaxLen(3, "ERROR_01")
   
-  val producto_id = new huemul_Columns (StringType, true, "Código de productos (tc, prestamo cuota, linea de crédito).") 
-  producto_id.setIsPK(true)
-  producto_id.setARCO_Data(false)  
-  producto_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val negocio_id = new huemul_Columns (StringType, true, "Código de negocio (consumo, hipotecario, comercial).") 
-  negocio_id.setIsPK(true)
-  negocio_id.setARCO_Data(false)  
-  negocio_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+  val producto_id: huemul_Columns = new huemul_Columns (StringType, true, "Código de productos (tc, prestamo cuota, linea de crédito).")
+      .setIsPK()
+
+  val negocio_id: huemul_Columns = new huemul_Columns (StringType, true, "Código de negocio (consumo, hipotecario, comercial).")
+      .setIsPK()
+
   /**Deuda**/
-  val gestion_colocacion_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de las colocaciones") 
-  gestion_colocacion_mes.setARCO_Data(false)  
-  gestion_colocacion_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val gestion_colocacionMora90_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de las colocaciones con morosidad mayor a 90 dias") 
-  gestion_colocacionMora90_mes.setARCO_Data(false)  
-  gestion_colocacionMora90_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  val gestion_colocacion_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de las colocaciones")
+
+  val gestion_colocacionMora90_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de las colocaciones con morosidad mayor a 90 dias")
 
   /**provisiones**/
-  val gestion_provision_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de provisiones del mes") 
-  gestion_provision_mes.setARCO_Data(false)  
-  gestion_provision_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val gestion_provision_Ano = new huemul_Columns (DecimalType(26,2), true, "Monto de provisiones acumuladas del año") 
-  gestion_provision_Ano.setARCO_Data(false)  
-  gestion_provision_Ano.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val gestion_provisionStock = new huemul_Columns (DecimalType(26,2), true, "Monto de provisiones constituidas") 
-  gestion_provisionStock.setARCO_Data(false)  
-  gestion_provisionStock.setSecurityLevel(huemulType_SecurityLevel.Public) 
-  
+  val gestion_provision_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de provisiones del mes")
+
+  val gestion_provision_Ano: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de provisiones acumuladas del año")
+
+  val gestion_provisionStock: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de provisiones constituidas")
+
   /**castigos**/
-  val gestion_castigo_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de castigos del mes") 
-  gestion_castigo_mes.setARCO_Data(false)  
-  gestion_castigo_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val gestion_castigo_Ano = new huemul_Columns (DecimalType(26,2), true, "Monto de castigos acumuladas del año") 
-  gestion_castigo_Ano.setARCO_Data(false)  
-  gestion_castigo_Ano.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+  val gestion_castigo_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de castigos del mes")
+
+  val gestion_castigo_Ano: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de castigos acumuladas del año")
+
   /**recuperaciones**/
-  val gestion_recupero_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de recuperaciones del mes") 
-  gestion_recupero_mes.setARCO_Data(false)  
-  gestion_recupero_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val gestion_recupero_Ano = new huemul_Columns (DecimalType(26,2), true, "Monto de recuperaciones acumuladas del año") 
-  gestion_recupero_Ano.setARCO_Data(false)  
-  gestion_recupero_Ano.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  
+  val gestion_recupero_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de recuperaciones del mes")
+
+  val gestion_recupero_Ano: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de recuperaciones acumuladas del año")
+
   /**Gasto en Riesgo**/
-   val gestion_gastoRiesgo_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de gasto en Riesgo es del mes (provision_mes + castigo_mes - recupero_mes)") 
-  gestion_gastoRiesgo_mes.setARCO_Data(false)  
-  gestion_gastoRiesgo_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val gestion_gastoRiesgo_Ano = new huemul_Columns (DecimalType(26,2), true, "Monto de gasto en Riesgo acumuladas del año (privision_mes + castigo_mes - recupero_mes") 
-  gestion_gastoRiesgo_Ano.setARCO_Data(false)  
-  gestion_gastoRiesgo_Ano.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+   val gestion_gastoRiesgo_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de gasto en Riesgo es del mes (provision_mes + castigo_mes - recupero_mes)")
+
+  val gestion_gastoRiesgo_Ano: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de gasto en Riesgo acumuladas del año (privision_mes + castigo_mes - recupero_mes")
+
   
    /**Ingresos por Interes**/
-  val gestion_ingresoInteres_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de Ingresos por intereses y reajustes  del mes") 
-  gestion_ingresoInteres_mes.setARCO_Data(false)  
-  gestion_ingresoInteres_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+  val gestion_ingresoInteres_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de Ingresos por intereses y reajustes  del mes")
+
    /**gastos por Interes**/
-  val gestion_gastoInteres_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de gastos por intereses y reajustes  del mes") 
-  gestion_gastoInteres_mes.setARCO_Data(false)  
-  gestion_gastoInteres_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+  val gestion_gastoInteres_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de gastos por intereses y reajustes  del mes")
+
    /**Ingresos por Comision**/
-  val gestion_ingresoComision_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de Ingresos por Comisiones del mes") 
-  gestion_ingresoComision_mes.setARCO_Data(false)  
-  gestion_ingresoComision_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+  val gestion_ingresoComision_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de Ingresos por Comisiones del mes")
+
   /**gastos por Comision**/
-  val gestion_gastoComision_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de gastos por Comisiones del mes") 
-  gestion_gastoComision_mes.setARCO_Data(false)  
-  gestion_gastoComision_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+  val gestion_gastoComision_mes: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto de gastos por Comisiones del mes")
+
  
   /**Utilidad**/
   val gestion_utilidadFinanciera_mes = new huemul_Columns (DecimalType(26,2), true, "Monto de gastos por Comisiones del mes") 
-  gestion_utilidadFinanciera_mes.setARCO_Data(false)  
-  gestion_utilidadFinanciera_mes.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
+
    
   //**********Atributos adicionales de DataQuality 
   /*

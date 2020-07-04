@@ -4,7 +4,6 @@ package com.yourcompany.tables.master
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.tables._
-import com.huemulsolutions.bigdata.dataquality._
 import org.apache.spark.sql.types._
 
 
@@ -21,7 +20,7 @@ class tbl_sbif_eerr_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hue
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
   this.setLocalPath("sbif/")
     //columna de particion
-  this.setPartitionField("periodo_mes")
+  //this.setPartitionField("periodo_mes")
   //Frecuencia de actualización
   this.setFrequency(huemulType_Frequency.MONTHLY)
   //nuevo desde version 2.0
@@ -61,46 +60,32 @@ class tbl_sbif_eerr_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hue
   /**********   C O L U M N A S   ****************************************/
 
     //Columna de periodo
-  val periodo_mes = new huemul_Columns (StringType, true,"periodo de los datos")
-  periodo_mes.setIsPK(true)
+  val periodo_mes: huemul_Columns = new huemul_Columns (StringType, true,"periodo de los datos")
+      .setIsPK()
+      .setPartitionColumn(1, dropBeforeInsert = false, oneValuePerProcess = true)
     
-  val ins_id = new huemul_Columns (StringType, true, "Código institución.") 
-  ins_id.setIsPK(true)
-  ins_id.setARCO_Data(false)  
-  ins_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  ins_id.setDQ_MinLen(3) 
-  ins_id.setDQ_MaxLen(3)
+  val ins_id: huemul_Columns = new huemul_Columns (StringType, true, "Código institución.")
+      .setIsPK()
+      .setPartitionColumn(2, dropBeforeInsert = true, oneValuePerProcess = true)
+      .setDQ_MinLen(3,"ERROR_01")
+      .setDQ_MaxLen(3, "ERROR_02")
   
-  val planCuenta_id = new huemul_Columns (StringType, true, "Código contable. Es un campo de 7 digitos que identifica el concepto contable que se describe en el archivo Modelo-MB1.txt.") 
-  planCuenta_id.setIsPK(true)
-  planCuenta_id.setARCO_Data(false)  
-  planCuenta_id.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  planCuenta_id.setDQ_MinLen(7) 
-  planCuenta_id.setDQ_MaxLen(7)  
+  val planCuenta_id: huemul_Columns = new huemul_Columns (StringType, true, "Código contable. Es un campo de 7 digitos que identifica el concepto contable que se describe en el archivo Modelo-MB1.txt.")
+      .setIsPK()
+      .setDQ_MinLen(7,"ERROR_03")
+      .setDQ_MaxLen(7, "ERROR_04")
   
-  val eerr_origen = new huemul_Columns (StringType, true, "Codigo del archivo de origen (b1,r1,c1,c2") 
-  eerr_origen.setARCO_Data(false)  
-  eerr_origen.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  val eerr_origen: huemul_Columns = new huemul_Columns (StringType, true, "Codigo del archivo de origen (b1,r1,c1,c2")
 
-  val eerr_Monto_clp = new huemul_Columns (DecimalType(26,2), true, "Monto Moneda Chilena No Reajustable ") 
-  eerr_Monto_clp.setARCO_Data(false)  
-  eerr_Monto_clp.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  val eerr_Monto_clp: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto Moneda Chilena No Reajustable ")
 
-  val eerr_Monto_ipc = new huemul_Columns (DecimalType(26,2), true, "Monto Moneda reajustable por factores de IPC ") 
-  eerr_Monto_ipc.setARCO_Data(false)  
-  eerr_Monto_ipc.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  val eerr_Monto_ipc: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto Moneda reajustable por factores de IPC ")
 
-  val eerr_Monto_tdc = new huemul_Columns (DecimalType(26,2), true, "Monto Moneda reajustable por Tipo de Cambio ") 
-  eerr_Monto_tdc.setARCO_Data(false)  
-  eerr_Monto_tdc.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  val eerr_Monto_tdc: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto Moneda reajustable por Tipo de Cambio ")
 
-  val eerr_Monto_tdcb = new huemul_Columns (DecimalType(26,2), true, "Monto en Moneda Extranjera de acuerdo al tipo de cambio de representación contable usado por el banco ") 
-  eerr_Monto_tdcb.setARCO_Data(false)  
-  eerr_Monto_tdcb.setSecurityLevel(huemulType_SecurityLevel.Public)  
-  
-  val eerr_Monto = new huemul_Columns (DecimalType(26,2), true, "suma de los campos eerr_Monto_clp+eerr_Monto_ipc+eerr_Monto_tdc+eerr_Monto_tdcb ") 
-  eerr_Monto.setARCO_Data(false)  
-  eerr_Monto.setSecurityLevel(huemulType_SecurityLevel.Public)  
+  val eerr_Monto_tdcb: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "Monto en Moneda Extranjera de acuerdo al tipo de cambio de representación contable usado por el banco ")
+
+  val eerr_Monto: huemul_Columns = new huemul_Columns (DecimalType(26,2), true, "suma de los campos eerr_Monto_clp+eerr_Monto_ipc+eerr_Monto_tdc+eerr_Monto_tdcb ")
 
 
 
