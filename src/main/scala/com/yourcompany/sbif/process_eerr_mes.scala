@@ -77,63 +77,46 @@ object process_eerr_mes {
       
       if (itbl_institucion_mes_data.length == 0)
         Control.RaiseError(s"Error: No se encontraron instituciones cargadas para el periodo $periodo_mes")
-        
-      var DF_RAW_B1_FINAL: DataFrame = null
-      var DF_RAW_R1_FINAL: DataFrame = null
-      var DF_RAW_C1_FINAL: DataFrame = null
-      var DF_RAW_C2_FINAL: DataFrame = null
-      
+
       itbl_institucion_mes_data.foreach { x =>
         val CodIns = x.getString(0)
 
         /** ************* ABRE RAW DESDE DATALAKE **********************/
         Control.NewStep(s"Abre DataLake institucion B1: $CodIns")
-        val DF_RAW_B1 = new raw_B1_mes(huemulBigDataGov, Control)
+        var DF_RAW_B1 = new raw_B1_mes(huemulBigDataGov, Control)
         if (!DF_RAW_B1.open("DF_RAW", Control, param_ano, param_mes, 1, 0, 0, 0, CodIns))
           Control.RaiseError(s"error encontrado, abortar: ${DF_RAW_B1.Error.ControlError_Message}")
-
-        if (DF_RAW_B1_FINAL == null)
-          DF_RAW_B1_FINAL = DF_RAW_B1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
-        else
-          DF_RAW_B1_FINAL = DF_RAW_B1_FINAL.union(DF_RAW_B1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns)))
-
+        val DF_RAW_B1_FINAL = DF_RAW_B1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
 
         Control.NewStep(s"Abre DataLake institucion R1: $CodIns")
         val DF_RAW_R1 = new raw_R1_mes(huemulBigDataGov, Control)
         if (!DF_RAW_R1.open("DF_RAW", Control, param_ano, param_mes, 1, 0, 0, 0, CodIns))
           Control.RaiseError(s"error encontrado, abortar: ${DF_RAW_R1.Error.ControlError_Message}")
-
-        if (DF_RAW_R1_FINAL == null)
-          DF_RAW_R1_FINAL = DF_RAW_R1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
-        else
-          DF_RAW_R1_FINAL = DF_RAW_R1_FINAL.union(DF_RAW_R1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns)))
-
+        val DF_RAW_R1_FINAL = DF_RAW_R1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
 
         Control.NewStep(s"Abre DataLake institucion C1: $CodIns")
         val DF_RAW_C1 = new raw_C1_mes(huemulBigDataGov, Control)
         if (!DF_RAW_C1.open("DF_RAW", Control, param_ano, param_mes, 1, 0, 0, 0, CodIns))
           Control.RaiseError(s"error encontrado, abortar: ${DF_RAW_C1.Error.ControlError_Message}")
-
-        if (DF_RAW_C1_FINAL == null)
-          DF_RAW_C1_FINAL = DF_RAW_C1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
-        else
-          DF_RAW_C1_FINAL = DF_RAW_C1_FINAL.union(DF_RAW_C1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns)))
+        val DF_RAW_C1_FINAL = DF_RAW_C1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
 
         Control.NewStep(s"Abre DataLake institucion C2: $CodIns")
         val DF_RAW_C2 = new raw_C2_mes(huemulBigDataGov, Control)
         if (!DF_RAW_C2.open("DF_RAW", Control, param_ano, param_mes, 1, 0, 0, 0, CodIns))
           Control.RaiseError(s"error encontrado, abortar: ${DF_RAW_C2.Error.ControlError_Message}")
-
-        if (DF_RAW_C2_FINAL == null)
-          DF_RAW_C2_FINAL = DF_RAW_C2.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
-        else
-          DF_RAW_C2_FINAL = DF_RAW_C2_FINAL.union(DF_RAW_C2.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns)))
+        val DF_RAW_C2_FINAL = DF_RAW_C2.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))
 
 
         DF_RAW_B1_FINAL.createOrReplaceTempView("DF_RAW_B1")
         DF_RAW_R1_FINAL.createOrReplaceTempView("DF_RAW_R1")
         DF_RAW_C1_FINAL.createOrReplaceTempView("DF_RAW_C1")
         DF_RAW_C2_FINAL.createOrReplaceTempView("DF_RAW_C2")
+
+        DF_RAW_R1.DataFramehuemul.DataFrame.unpersist()
+        DF_RAW_B1.DataFramehuemul.DataFrame.unpersist()
+        DF_RAW_C1.DataFramehuemul.DataFrame.unpersist()
+        DF_RAW_C1.DataFramehuemul.DataFrame.unpersist()
+
 
 
         /** *******************************************************/
