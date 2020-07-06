@@ -4,7 +4,6 @@ package com.yourcompany.tables.master
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.tables._
-import com.huemulsolutions.bigdata.dataquality._
 import org.apache.spark.sql.types._
 
 
@@ -21,7 +20,7 @@ class tbl_comun_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Cont
   //Ruta en HDFS especifica para esta tabla (Globalpaths / localPath)
   this.setLocalPath("sbif/")
     //columna de particion
-  this.setPartitionField("periodo_mes")
+  //this.setPartitionField("periodo_mes")
   //Frecuencia de actualización
   this.setFrequency(huemulType_Frequency.MONTHLY)
   //nuevo desde version 2.0
@@ -68,13 +67,14 @@ class tbl_comun_institucion_mes(huemulBigDataGov: huemul_BigDataGovernance, Cont
   /**********   C O L U M N A S   ****************************************/
 
     //Columna de periodo
-  val periodo_mes = new huemul_Columns (StringType, true,"periodo de los datos").setIsPK()
-    
-    
-  val ins_id = new huemul_Columns (StringType, true, "Codigo de la institución") .setIsPK().setDQ_MinLen(3,"ins_id_ERROR_LEN").setDQ_MaxLen(3,"ins_id_ERROR_LEN")
+  val periodo_mes: huemul_Columns = new huemul_Columns (StringType, true,"periodo de los datos")
+      .setIsPK()
+      .setPartitionColumn(1)
+
+  val ins_id: huemul_Columns = new huemul_Columns (StringType, true, "Codigo de la institución") .setIsPK().setDQ_MinLen(3,"ins_id_ERROR_LEN").setDQ_MaxLen(3,"ins_id_ERROR_LEN")
               .securityLevel(huemulType_SecurityLevel.Public)  
     
-  val ins_nombre = new huemul_Columns (StringType, true, "Nombre de la institución").securityLevel(huemulType_SecurityLevel.Public)  
+  val ins_nombre: huemul_Columns = new huemul_Columns (StringType, true, "Nombre de la institución").securityLevel(huemulType_SecurityLevel.Public)
 
 
   //**********Atributos adicionales de DataQuality 

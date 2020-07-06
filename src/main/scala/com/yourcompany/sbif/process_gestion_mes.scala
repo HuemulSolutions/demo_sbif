@@ -5,16 +5,16 @@ import com.huemulsolutions.bigdata.control._
 import com.huemulsolutions.bigdata.dataquality._
 import com.yourcompany.tables.master._
 import com.yourcompany.settings._
-import java.util.Calendar;
+import java.util.Calendar
 import scala.collection.mutable.ArrayBuffer
 
 object process_gestion_mes {
   def main(args: Array[String]): Unit = {
     val huemulBigDataGov  = new huemul_BigDataGovernance(s"Masterizacion tabla tbl_comun_institucion - ${this.getClass.getSimpleName}", args, globalSettings.Global)
-    
-    /*************** PARAMETROS **********************/
-    var param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parametro año, ej: ano=2017").toInt
-    var param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parametro mes, ej: mes=12").toInt
+
+    /** ************* PARAMETROS **********************/
+    val param_ano = huemulBigDataGov.arguments.GetValue("ano", null, "Debe especificar el parametro año, ej: ano=2017").toInt
+    val param_mes = huemulBigDataGov.arguments.GetValue("mes", null, "Debe especificar el parametro mes, ej: mes=12").toInt
     
     val Control = new huemul_Control(huemulBigDataGov, null, huemulType_Frequency.MONTHLY)    
     
@@ -35,17 +35,17 @@ object process_gestion_mes {
       val periodo_mes = huemulBigDataGov.ReplaceWithParams("{{YYYY}}-{{MM}}-{{DD}}", param_ano, param_mes, 1, 0, 0, 0, null)
       val periodo_mesAntFecha = huemulBigDataGov.setDate(periodo_mes)
       periodo_mesAntFecha.add(Calendar.MONTH, -1)
-      val periodo_mesAnt = huemulBigDataGov.dateFormat.format(periodo_mesAntFecha.getTime())
+      val periodo_mesAnt = huemulBigDataGov.dateFormat.format(periodo_mesAntFecha.getTime)
       
       //Obtiene datos de EERR consolidado del mes
       Control.NewStep("Obtiene datos de EERR consolidado del mes")
       val eerr_DF = new huemul_DataFrame(huemulBigDataGov, Control)
       eerr_DF.DF_from_SQL("eerr", s"""select ins_id
                                              ,planCuenta_id
-                                             ,sum(case when periodo_mes = '${periodo_mes}' then eerr_Monto else 0 end) as eerr_Monto_Act
-                                             ,sum(case when periodo_mes = '${periodo_mesAnt}' then eerr_Monto else 0 end) as eerr_Monto_Ant
+                                             ,sum(case when periodo_mes = '$periodo_mes' then eerr_Monto else 0 end) as eerr_Monto_Act
+                                             ,sum(case when periodo_mes = '$periodo_mesAnt' then eerr_Monto else 0 end) as eerr_Monto_Ant
                                       FROM ${itbl_sbif_eerr_mes.getTable()}
-                                      WHERE periodo_mes in ('${periodo_mes}','${periodo_mesAnt}')
+                                      WHERE periodo_mes in ('$periodo_mes','$periodo_mesAnt')
                                       GROUP BY ins_id
                                               ,planCuenta_id
                                     """)
@@ -65,12 +65,12 @@ object process_gestion_mes {
       ManualRules.append(new huemul_DataQuality(null,"Suma de Monto mes Anterior > 0", "sum(eerr_Monto_Ant) > 0",2,huemulType_DQQueryLevel.Aggregate, huemulType_DQNotification.ERROR))
       val DQ_Result = eerr_DF.DF_RunDataQuality(ManualRules)
       if (DQ_Result.isError) {
-        Control.RaiseError(s"User Error: No se encontraron datos en mes ${if (DQ_Result.Error_Code == 1) s"actual (${periodo_mes})" else if (DQ_Result.Error_Code == 2) s"anterior (${periodo_mesAnt})" else "indetermiando" } ")  
+        Control.RaiseError(s"User Error: No se encontraron datos en mes ${if (DQ_Result.Error_Code == 1) s"actual ($periodo_mes)" else if (DQ_Result.Error_Code == 2) s"anterior ($periodo_mesAnt)" else "indetermiando" } ")
       }
       
       
       Control.NewStep("Generar Logica de Negocio: Obtiene cruce de plan de cuentas con eerr mensual")
-      itbl_sbif_gestion_mes.DF_from_SQL("tabla_Calculo1", s""" SELECT '${periodo_mes}' as periodo_mes
+      itbl_sbif_gestion_mes.DF_from_SQL("tabla_Calculo1", s""" SELECT '$periodo_mes' as periodo_mes
                                                                   ,ins_id
                                                                   ,planCuenta.producto_id
                                                                   ,planCuenta.Negocio_Id
@@ -132,7 +132,7 @@ object process_gestion_mes {
       */
       
       val a = new tbl_comun_institucion(huemulBigDataGov, Control)
-      a.DF_from_SQL("a", "select * from tabla_Calculo1", false)
+      a.DF_from_SQL("a", "select * from tabla_Calculo1", SaveInTemp = false)
       a.executeFull("a2")
       
       Control.NewStep("Ejecuta Proceso")    
@@ -142,10 +142,10 @@ object process_gestion_mes {
      
       Control.FinishProcessOK
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         Control.Control_Error.GetError(e, this.getClass.getName, null)
         Control.FinishProcessError()
-      }
+
     }
     
     huemulBigDataGov.close()

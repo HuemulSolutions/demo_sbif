@@ -3,7 +3,6 @@ package com.yourcompany.tables.master
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.tables._
 import com.huemulsolutions.bigdata.control._
-import org.apache.spark.sql.types.DataTypes._
 import org.apache.spark.sql.types.StringType
 
 /**
@@ -13,9 +12,9 @@ class tbl_comun_institucion(huemulBigDataGov: huemul_BigDataGovernance, Control:
         extends huemul_Table(huemulBigDataGov, Control) with Serializable{
    
   /**********   C O L U M N A S   ****************************************/
-  val ins_id = new huemul_Columns(StringType,true,"Código de institución entregado por SBIF")
+  val ins_id: huemul_Columns = new huemul_Columns(StringType,true,"Código de institución entregado por SBIF")
                     .setIsPK().setDQ_MinLen(3,"ERR_01").setDQ_MaxLen(3,"ERR_01")
-  val ins_nombre = new huemul_Columns(StringType,true,"Nombre de la institución entregada por la SBIF")
+  val ins_nombre: huemul_Columns = new huemul_Columns(StringType,true,"Nombre de la institución entregada por la SBIF")
                     .setDQ_MinLen (5,"ERR_02").setDQ_MaxLen(100,"ERR_02")
   
                     

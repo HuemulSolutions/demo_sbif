@@ -4,7 +4,7 @@ import com.yourcompany.sbif.datalake._
 import com.yourcompany.tables.master._
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
-import java.util.Calendar;
+import java.util.Calendar
 import com.yourcompany.settings._
 
 object process_institucion extends Serializable {
@@ -23,16 +23,15 @@ object process_institucion extends Serializable {
     
     /*************** CICLO REPROCESO MASIVO **********************/
     var i: Int = 1
-    var FinOK: Boolean = true
-    var Fecha = huemulBigDataGov.setDateTime(param_ano, param_mes, 1, 0, 0, 0)
+    val Fecha = huemulBigDataGov.setDateTime(param_ano, param_mes, 1, 0, 0, 0)
     
     while (i <= param_numMeses) {
       param_ano = huemulBigDataGov.getYear(Fecha)
       param_mes = huemulBigDataGov.getMonth(Fecha)
       println(s"Procesando AÃ±o $param_ano, Mes $param_mes ($i de $param_numMeses)")
-      
+
       //Ejecuta cÃ³digo
-      var FinOK = procesa_master(huemulBigDataGov, null, param_ano, param_mes)
+      val FinOK = procesa_master(huemulBigDataGov, null, param_ano, param_mes)
       
       if (FinOK)
         i+=1
@@ -59,8 +58,8 @@ object process_institucion extends Serializable {
       Control.AddParamYear("param_ano", param_ano)
       Control.AddParamMonth("param_mes", param_mes)
       
-      Control.NewStep("Abre DataLake")  
-      var DF_RAW =  new raw_institucion_mes(huemulBigDataGov, Control)
+      Control.NewStep("Abre DataLake")
+      val DF_RAW = new raw_institucion_mes(huemulBigDataGov, Control)
       if (!DF_RAW.open("DF_RAW", Control, param_ano, param_mes, 0, 0, 0, 0))       
         Control.RaiseError(s"error encontrado, abortar: ${DF_RAW.Error.ControlError_Message}")
       
@@ -81,8 +80,8 @@ object process_institucion extends Serializable {
       DF_RAW.DataFramehuemul.DataFrame.unpersist()
       
       Control.NewStep("Asocia columnas de la tabla con nombres de campos de SQL")
-      MasterTable.ins_id.SetMapping("institucion_id")
-      MasterTable.ins_nombre.SetMapping("institucion_Nombre")
+      MasterTable.ins_id.setMapping("institucion_id")
+      MasterTable.ins_nombre.setMapping("institucion_Nombre")
       //Si los campos SQL se llamaran igual a las columnas de la tabla, podría asignar automáticamente
       //con el méetodo MasterTable.setMappingAuto()
                   
@@ -92,12 +91,12 @@ object process_institucion extends Serializable {
       
       Control.FinishProcessOK
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         Control.Control_Error.GetError(e, this.getClass.getName, null)
         Control.FinishProcessError()
-      }
+
     }
     
-    return Control.Control_Error.IsOK()   
+    Control.Control_Error.IsOK()
   }
 }
