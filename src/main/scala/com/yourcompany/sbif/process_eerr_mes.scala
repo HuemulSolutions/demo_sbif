@@ -4,7 +4,6 @@ package com.yourcompany.sbif
 import com.huemulsolutions.bigdata.common._
 import com.huemulsolutions.bigdata.control._
 import java.util.Calendar
-import org.apache.spark.sql._
 import com.yourcompany.tables.master._
 import com.yourcompany.sbif.datalake._
 import org.apache.spark.sql.functions._
@@ -83,7 +82,7 @@ object process_eerr_mes {
 
         /** ************* ABRE RAW DESDE DATALAKE **********************/
         Control.NewStep(s"Abre DataLake institucion B1: $CodIns")
-        var DF_RAW_B1 = new raw_B1_mes(huemulBigDataGov, Control)
+        val DF_RAW_B1 = new raw_B1_mes(huemulBigDataGov, Control)
         if (!DF_RAW_B1.open("DF_RAW", Control, param_ano, param_mes, 1, 0, 0, 0, CodIns))
           Control.RaiseError(s"error encontrado, abortar: ${DF_RAW_B1.Error.ControlError_Message}")
         val DF_RAW_B1_FINAL = DF_RAW_B1.DataFramehuemul.DataFrame.withColumn("ins_Id", lit(CodIns))

@@ -9,10 +9,19 @@ import com.yourcompany.tables.master._
 
 @Test
 class AppTest {
+  val Global: huemul_GlobalPath = new huemul_GlobalPath()
+  Global.GlobalEnvironments = "production, experimental"
+  Global.CONTROL_Setting.append(new huemul_KeyValuePath("production",s"file.txt"))
+  Global.IMPALA_Setting.append(new huemul_KeyValuePath("production",s"file.txt"))
+  Global.TEMPORAL_Path.append(new huemul_KeyValuePath("production",s"/usr/production/temp/"))
+  Global.DQError_Path.append(new huemul_KeyValuePath("production",s"/usr/production/temp/"))
+  Global.DQError_DataBase.append(new huemul_KeyValuePath("production",s"dqerror_database"))
+  Global.setValidationLight()
+
     val args: Array[String] = new Array[String](1)
     args(0) = "Environment=production,RegisterInControl=false,TestPlanMode=true"
       
-    val huemulBigDataGov = new huemul_BigDataGovernance("Pruebas Inicialización de Clases",args,com.yourcompany.settings.globalSettings.Global)
+    val huemulBigDataGov = new huemul_BigDataGovernance("Pruebas Inicialización de Clases",args,Global)
     val Control = new huemul_Control(huemulBigDataGov,null, huemulType_Frequency.ANY_MOMENT)
 
     /****************************************************************************************/
