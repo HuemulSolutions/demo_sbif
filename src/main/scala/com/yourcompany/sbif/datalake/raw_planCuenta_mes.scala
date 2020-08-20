@@ -37,8 +37,8 @@ class raw_planCuenta_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: hu
    //separador de columnas
      .setColumnDelimiter("\t")    //SET FOR CARACTER
    //forma rápida de configuración de columnas del archivo
-    .addColumn("mes", "mes", IntegerType, "Mes de los datos que vienen en el archivo")
     .addColumn("ano", "ano", IntegerType, "Año de los datos que vienen en el archivo")
+    .addColumn("mes", "mes", IntegerType, "Mes de los datos que vienen en el archivo")
     .addColumn("planCuenta_id", "planCuenta_id", StringType, "código del plan de cuentas")
     .addColumn("planCuenta_Nombre", "planCuenta_Nombre", StringType, "Nombre de la cuenta")
      
