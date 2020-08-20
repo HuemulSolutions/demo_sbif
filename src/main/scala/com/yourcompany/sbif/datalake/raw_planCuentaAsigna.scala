@@ -16,37 +16,38 @@ class raw_planCuentaAsigna(huemulBigDataGov: huemul_BigDataGovernance, Control: 
    this.setFrequency(huemulType_Frequency.MONTHLY)
    
    //Crea variable para configuración de lectura del archivo
-   val CurrentSetting = new huemul_DataLakeSetting(huemulBigDataGov)
+   val CurrentSetting: huemul_DataLakeSetting = new huemul_DataLakeSetting(huemulBigDataGov)
    //setea la fecha de vigencia de esta configuración
-   CurrentSetting.StartDate = huemulBigDataGov.setDateTime(2010,1,1,0,0,0)
-   CurrentSetting.EndDate = huemulBigDataGov.setDateTime(2050,12,12,0,0,0)
+     .setStartDate(2010,1,1,0,0,0)
+     .setEndDate (2050,12,12,0,0,0)
 
    //Configuración de rutas globales
-   CurrentSetting.GlobalPath = huemulBigDataGov.GlobalSettings.RAW_SmallFiles_Path
+     .setGlobalPath(huemulBigDataGov.GlobalSettings.RAW_SmallFiles_Path)
    //Configura ruta local, se pueden usar comodines
-   CurrentSetting.LocalPath = "sbif/"
+     .setLocalPath("sbif/")
    //configura el nombre del archivo (se pueden usar comodines)
-   CurrentSetting.FileName = "PLANCUENTA_GESTION_{{NUM}}.txt"
+     .setFileName ("PLANCUENTA_GESTION_{{NUM}}.txt")
    //especifica el tipo de archivo a leer
-   CurrentSetting.FileType = huemulType_FileType.TEXT_FILE
+     .setFileType (huemulType_FileType.TEXT_FILE)
    //expecifica el nombre del contacto del archivo en TI
-   CurrentSetting.ContactName = "Encargado de asignación de productos"
+     .setContactName("Encargado de asignación de productos")
 
    //Indica como se lee el archivo
-   CurrentSetting.DataSchemaConf.ColSeparatorType = huemulType_Separator.CHARACTER  //POSITION;CHARACTER
+     .setColumnDelimiterType(huemulType_Separator.CHARACTER)  //POSITION;CHARACTER
    //separador de columnas
-   CurrentSetting.DataSchemaConf.ColSeparator = ";"    //SET FOR CARACTER
+     .setColumnDelimiter( ";")    //SET FOR CARACTER
    //forma rápida de configuración de columnas del archivo
-   CurrentSetting.DataSchemaConf.AddColumns("planCuenta_id", "planCuenta_id", StringType, "código del plan de cuentas")
-   CurrentSetting.DataSchemaConf.AddColumns("producto_id", "producto_id", StringType, "código del Producto asociado")
-   CurrentSetting.DataSchemaConf.AddColumns("negocio_id", "negocio_id", StringType, "código del negocio asociado")
-   CurrentSetting.DataSchemaConf.AddColumns("concepto", "concepto", StringType, "nombre del concepto de los datos (colocacion, provision, etc)")
+     .addColumn("planCuenta_id", "planCuenta_id", StringType, "código del plan de cuentas")
+     .addColumn("producto_id", "producto_id", StringType, "código del Producto asociado")
+     .addColumn("negocio_id", "negocio_id", StringType, "código del negocio asociado")
+     .addColumn("concepto", "concepto", StringType, "nombre del concepto de los datos (colocacion, provision, etc)")
      
    //Seteo de lectura de información de Log (en caso de tener)
-   CurrentSetting.LogSchemaConf.ColSeparatorType = huemulType_Separator.NONE  //POSITION;CHARACTER;NONE
-   CurrentSetting.LogNumRows_FieldName = null
-   CurrentSetting.LogSchemaConf.ColSeparator = ";"    //SET FOR CARACTER
-   CurrentSetting.LogSchemaConf.setHeaderColumnsString( "VACIO" )
+     .setHeaderColumnDelimiterType(huemulType_Separator.NONE)  //POSITION;CHARACTER;NONE
+     .setLogNumRowsColumnName(null)
+     .setHeaderColumnDelimiter(";")    //SET FOR CARACTER
+     .setHeaderColumnsString( "VACIO" )
+
    this.SettingByDate.append(CurrentSetting)
   
     /***

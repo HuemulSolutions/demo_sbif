@@ -18,40 +18,41 @@ class raw_R1_mes(huemulBigDataGov: huemul_BigDataGovernance, Control: huemul_Con
    this.setFrequency(huemulType_Frequency.MONTHLY)
    
    //Crea variable para configuración de lectura del archivo
-   val CurrentSetting = new huemul_DataLakeSetting(huemulBigDataGov)
+   val CurrentSetting: huemul_DataLakeSetting = new huemul_DataLakeSetting(huemulBigDataGov)
    //setea la fecha de vigencia de esta configuración
-   CurrentSetting.StartDate = huemulBigDataGov.setDateTime(2010,1,1,0,0,0)
-   CurrentSetting.EndDate = huemulBigDataGov.setDateTime(2050,12,12,0,0,0)
+     .setStartDate (2010,1,1,0,0,0)
+     .setEndDate (2050,12,12,0,0,0)
 
    //Configuración de rutas globales
-   CurrentSetting.GlobalPath = huemulBigDataGov.GlobalSettings.RAW_SmallFiles_Path
+     .setGlobalPath( huemulBigDataGov.GlobalSettings.RAW_SmallFiles_Path)
    //Configura ruta local, se pueden usar comodines
-   CurrentSetting.LocalPath = "sbif/{{YYYY}}{{MM}}/"
+     .setLocalPath ("sbif/{{YYYY}}{{MM}}/")
    //configura el nombre del archivo (se pueden usar comodines)
-   CurrentSetting.FileName = "r1{{YYYY}}{{MM}}{{Cod_Banco}}.txt"
+     .setFileName ("r1{{YYYY}}{{MM}}{{Cod_Banco}}.txt")
    //especifica el tipo de archivo a leer
-   CurrentSetting.FileType = huemulType_FileType.TEXT_FILE
+     .setFileType( huemulType_FileType.TEXT_FILE)
    //expecifica el nombre del contacto del archivo en TI
-   CurrentSetting.ContactName = "SBIF"
+     .setContactName ("SBIF")
 
    //Indica como se lee el archivo
-   CurrentSetting.DataSchemaConf.ColSeparatorType = huemulType_Separator.CHARACTER  //POSITION;CHARACTER
+     .setColumnDelimiterType(huemulType_Separator.CHARACTER)  //POSITION;CHARACTER
    //separador de columnas
-   CurrentSetting.DataSchemaConf.ColSeparator = "\t"    //SET FOR CARACTER
+     .setColumnDelimiter("\t")    //SET FOR CARACTER
    //forma rápida de configuración de columnas del archivo
    //CurrentSetting.DataSchemaConf.setHeaderColumnsString("institucion_id;institucion_nombre")
    //Forma detallada
-   CurrentSetting.DataSchemaConf.AddColumns("planCuenta_id", "planCuenta_id", StringType, "Código contable. Es un campo de 7 digitos que identifica el concepto contable que se describe en el archivo Modelo-MR1.txt.")
-   CurrentSetting.DataSchemaConf.AddColumns("r1_Monto_clp", "monto_clp", DecimalType(20,2), "Monto Moneda Chilena No Reajustable (Valor en millones de pesos chilenos)")
-   CurrentSetting.DataSchemaConf.AddColumns("r1_Monto_ipc", "monto_ipc", DecimalType(20,2), "Monto Moneda reajustable por factores de IPC (Valor en millones de pesos chilenos)")
-   CurrentSetting.DataSchemaConf.AddColumns("r1_Monto_tdc", "monto_tdc", DecimalType(20,2), "Monto Moneda reajustable por Tipo de Cambio (Valor en millones de pesos chilenos)")
-   CurrentSetting.DataSchemaConf.AddColumns("r1_Monto_tdcb", "monto_tdcb", DecimalType(20,2), "Monto en Moneda Extranjera de acuerdo al tipo de cambio de representación contable usado por el banco (Valor en millones de pesos chilenos)")
+     .addColumn("planCuenta_id", "planCuenta_id", StringType, "Código contable. Es un campo de 7 digitos que identifica el concepto contable que se describe en el archivo Modelo-MR1.txt.")
+     .addColumn("r1_Monto_clp", "monto_clp", DecimalType(20,2), "Monto Moneda Chilena No Reajustable (Valor en millones de pesos chilenos)")
+     .addColumn("r1_Monto_ipc", "monto_ipc", DecimalType(20,2), "Monto Moneda reajustable por factores de IPC (Valor en millones de pesos chilenos)")
+     .addColumn("r1_Monto_tdc", "monto_tdc", DecimalType(20,2), "Monto Moneda reajustable por Tipo de Cambio (Valor en millones de pesos chilenos)")
+     .addColumn("r1_Monto_tdcb", "monto_tdcb", DecimalType(20,2), "Monto en Moneda Extranjera de acuerdo al tipo de cambio de representación contable usado por el banco (Valor en millones de pesos chilenos)")
     
    //Seteo de lectura de información de Log (en caso de tener)
-   CurrentSetting.LogSchemaConf.ColSeparatorType = huemulType_Separator.CHARACTER  //POSITION;CHARACTER;NONE
-   CurrentSetting.LogNumRows_FieldName = null
-   CurrentSetting.LogSchemaConf.ColSeparator = "\t"   //SET FOR CARACTER
-   CurrentSetting.LogSchemaConf.setHeaderColumnsString("codigo;banco") 
+     .setHeaderColumnDelimiterType(huemulType_Separator.CHARACTER)  //POSITION;CHARACTER;NONE
+     .setLogNumRowsColumnName(null)
+     .setHeaderColumnDelimiter("\t")   //SET FOR CARACTER
+     .setHeaderColumnsString("codigo;banco")
+
    this.SettingByDate.append(CurrentSetting)
   
     /***
